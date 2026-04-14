@@ -1,0 +1,216 @@
+/* Loading Screen Animations */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideInProgress {
+  from {
+    scaleX: 0;
+    opacity: 0;
+  }
+  to {
+    scaleX: 1;
+    opacity: 1;
+  }
+}
+
+@keyframes breathe {
+  0%, 100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.15;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.4);
+  }
+}
+
+@keyframes subtleFloat {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateY(0px);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateY(8px);
+  }
+}
+
+/* Utility classes for loading screen */
+.loading-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.loading-content {
+  text-align: center;
+  max-width: 600px;
+  position: relative;
+  z-index: 10;
+}
+
+.loading-text {
+  animation: fadeInUp 0.7s ease-out forwards;
+  opacity: 0;
+}
+
+.loading-text:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.loading-text:nth-child(2) {
+  animation-delay: 0.35s;
+}
+
+.loading-text:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+.loading-divider {
+  animation: slideInProgress 0.8s ease-out forwards;
+  opacity: 0;
+  animation-delay: 0.8s;
+  margin: 2rem auto;
+}
+
+.loading-progress-container {
+  animation: fadeInUp 0.6s ease-out 1.2s forwards;
+  opacity: 0;
+  margin-top: 3rem;
+}
+
+.loading-progress-bar {
+  animation: slideInProgress 0.8s ease-out forwards;
+  opacity: 0;
+  animation-delay: 1.8s;
+}
+
+.loading-dots {
+  animation: subtleFloat 2.5s ease-in-out infinite;
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.loading-dot {
+  animation: dotPulse 1.8s ease-in-out infinite;
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  margin: 0 4px;
+}
+
+.loading-dot:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+.loading-dot:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+/* Background breathing effect */
+.loading-background-orb {
+  animation: breathe 8s ease-in-out infinite;
+}
+
+.loading-background-orb:nth-child(2) {
+  animation-duration: 10s;
+  animation-delay: 1s;
+}
+
+/* Smooth transitions for content appearance */
+.content-enter {
+  animation: fadeInUp 0.7s ease-out forwards;
+}
+
+.navbar-enter {
+  animation: fadeInUp 0.6s ease-out forwards;
+  animation-delay: 0s;
+}
+
+.main-enter {
+  animation: fadeInUp 0.7s ease-out forwards;
+  animation-delay: 0.05s;
+}
+
+.footer-enter {
+  animation: fadeInUp 0.6s ease-out forwards;
+  animation-delay: 0.1s;
+}
+
+/* Prevent scrolling during loading */
+.loading-active {
+  overflow: hidden;
+}
+
+/* Smooth scrollbar appearance after loading */
+@supports (scrollbar-width: thin) {
+  .content-loaded {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+  }
+}
+
+/* Shimmer animation for background effects */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .loading-text {
+    font-size: 1.5rem;
+  }
+
+  .loading-content {
+    padding: 0 1.5rem;
+  }
+
+  .loading-dots {
+    bottom: 1rem;
+  }
+}

@@ -1,0 +1,142 @@
+/* AOS Custom Animation - Fade In */
+.aos-fade-in {
+    animation-name: fadeIn;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Project Card Slide Up Animation - muncul terus bergeser */
+.aos-project-slide {
+    animation-name: slideUpProject;
+}
+
+@keyframes slideUpProject {
+    from {
+        opacity: 0;
+        transform: translateY(40px) translateX(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) translateX(0);
+    }
+}
+
+/* Project Card Slide Left (stagger effect) */
+.aos-slide-left {
+    animation-name: slideLeft;
+}
+
+@keyframes slideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Project Card Slide Right (stagger effect) */
+.aos-slide-right {
+    animation-name: slideRight;
+}
+
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(-60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Reveal animation for IntersectionObserver-based reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.92s ease-out var(--reveal-delay, 0s), transform 0.92s ease-out var(--reveal-delay, 0s);
+    will-change: opacity, transform;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fade in with Scale */
+.aos-fade-scale {
+    animation-name: fadeScale;
+}
+
+@keyframes fadeScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Override AOS animations for staggered project cards */
+.project-card-container [data-aos] {
+    animation-delay: calc(var(--index, 0) * 0.1s);
+}
+
+/* Smooth transition for all AOS elements */
+[data-aos] {
+    transition: opacity 800ms ease-in-out, transform 800ms ease-in-out;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    [data-aos] {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .reveal {
+        transform: translateY(42px);
+        transition-duration: 0.88s;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        transition: none;
+        transform: none;
+    }
+}
+
+.viewport-hidden {
+    opacity: 0;
+    transform: translateY(24px);
+    pointer-events: none;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.viewport-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
