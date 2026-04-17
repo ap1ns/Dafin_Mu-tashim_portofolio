@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 interface LoadingScreenProps {
   duration?: number;
@@ -102,18 +102,18 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
     };
   }, [duration, onComplete, isLoading, hasStarted]);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     visible: {
       opacity: 1,
       transition: { duration: 0.4 }
     },
     exit: {
       opacity: 0,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+      transition: { duration: 0.8, ease: "easeOut" }
     }
   };
 
-  const textVariants = {
+  const textVariants: Variants = {
     hidden: { opacity: 0, y: 12 },
     visible: (i: number) => ({
       opacity: 1,
@@ -121,12 +121,12 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
       transition: {
         delay: 0.2 + i * 0.15,
         duration: 0.7,
-        ease: [0.16, 1, 0.3, 1]
+        ease: "easeOut"
       }
     })
   };
 
-  const lineVariants = {
+  const lineVariants: Variants = {
     hidden: { scaleX: 0, opacity: 0 },
     visible: {
       scaleX: 1,
@@ -134,7 +134,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
       transition: {
         delay: 0.8,
         duration: 0.8,
-        ease: [0.22, 1, 0.36, 1]
+        ease: "easeOut"
       }
     }
   };

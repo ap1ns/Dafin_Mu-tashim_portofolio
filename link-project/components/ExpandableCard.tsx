@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { Project } from '../../types';
 import { useScrollVisibility } from '../../hooks/useScrollAnimation';
 import ProjectDetailModal from './ProjectDetailModal';
@@ -125,7 +125,7 @@ const ExpandableCard: React.FC<ExpandableCardProps> = ({
       layout
       initial={false}
       animate={{ width: isExpanded ? expandedWidth : compactWidth }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       className={`relative rounded-2xl overflow-hidden ${isDark ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-200'
         } border shadow-lg hover:shadow-2xl transition-all duration-300`}
       style={{ opacity, transition: 'opacity 0.3s ease-out' }}
@@ -133,7 +133,7 @@ const ExpandableCard: React.FC<ExpandableCardProps> = ({
       {/* Media Container - Always maintains aspect ratio, never zooms */}
       <motion.div
         layout
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         className="w-full overflow-hidden bg-gradient-to-br from-zinc-800 to-black relative"
         style={{ paddingTop: cardPaddingTop, height: 0 }}
       >
