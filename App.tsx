@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, Suspense, lazy, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useCallback, Suspense, lazy, useRef } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ThemeProvider } from './context/ThemeContext';
@@ -149,20 +149,6 @@ const App: React.FC = () => {
     }, 800);
   };
 
-  // Saat pertama kali masuk setelah loading selesai,
-  // tunjukkan teks + tombol player sebentar dengan animasi lalu auto-hide
-  useEffect(() => {
-    if (!loadingComplete) return;
-
-    // Tampilkan player detail sebentar saat awal di semua ukuran layar
-    setIsPlayerOpen(true);
-    const timer = setTimeout(() => {
-      setIsPlayerOpen(false);
-    }, 3500);
-
-    return () => clearTimeout(timer);
-  }, [loadingComplete]);
-
   useEffect(() => {
     if (!loadingComplete) return;
 
@@ -193,7 +179,8 @@ const App: React.FC = () => {
     };
   }, [isPlayerOpen]);
 
-  // Sembunyikan player dan playlist ketika user melakukan scroll pada halaman (bukan dalam playlist)
+  // Sembunyikan player dan playlist ketika user melakukan scroll pada halaman (bukan dalam playlist) - DISABLED
+  /*
   useEffect(() => {
     if (!isPlayerOpen && !isTrackListOpen) return;
 
@@ -218,6 +205,7 @@ const App: React.FC = () => {
       window.removeEventListener('touchmove', hideOnScroll);
     };
   }, [isPlayerOpen, isTrackListOpen]);
+  */
 
   // Tutup track list ketika user klik/tap di luar area track list
   useEffect(() => {
@@ -240,12 +228,57 @@ const App: React.FC = () => {
     };
   }, [isTrackListOpen]);
 
+  // Prevent body scroll when playlist is open
+  useEffect(() => {
+    if (isTrackListOpen) {
+      // Prevent scrolling
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = '0px'; // Prevent layout shift
+    } else {
+      // Restore scrolling
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, [isTrackListOpen]);
+
+  const openPlaylist = useCallback(() => {
+    console.log('openPlaylist called, setting isPlayerOpen and isTrackListOpen to true');
+    console.log('Current state - isPlayerOpen:', isPlayerOpen, 'isTrackListOpen:', isTrackListOpen);
+    setIsPlayerOpen(true);
+    setIsTrackListOpen(true);
+
+    // Scroll to the open playlist modal if it's mounted
+    setTimeout(() => {
+      trackListRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 50);
+  }, [isPlayerOpen, isTrackListOpen]);
+
+  // Listen untuk custom event dari Navbar untuk membuka playlist
+  useLayoutEffect(() => {
+    const anyWindow = window as any;
+    anyWindow.openPlaylist = openPlaylist;
+
+    window.addEventListener('openPlaylist', openPlaylist as EventListener);
+    window.addEventListener('openMusicPlayer', openPlaylist as EventListener);
+    return () => {
+      delete anyWindow.openPlaylist;
+      window.removeEventListener('openPlaylist', openPlaylist as EventListener);
+      window.removeEventListener('openMusicPlayer', openPlaylist as EventListener);
+    };
+  }, [openPlaylist]);
+
   return (
     <ThemeProvider>
       <ModalProvider>
         <EasterEggProvider>
           <BrowserRouter>
-            <AudioProvider audioRef={audioRef} isSoundEnabled={soundEnabled}>
+            <AudioProvider audioRef={audioRef} isSoundEnabled={soundEnabled} openPlaylist={openPlaylist}>
               <div className="min-h-screen flex flex-col bg-black overflow-x-hidden selection:bg-white selection:text-black transition-colors duration-300 relative">
                 {/* Loading Screen */}
                 <LoadingScreen
@@ -294,7 +327,7 @@ const App: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <Navbar />
+                    <Navbar onOpenPlaylist={openPlaylist} />
                   </motion.div>
                 )}
 

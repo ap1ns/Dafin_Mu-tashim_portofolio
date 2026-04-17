@@ -33,7 +33,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, skillColor, isDark, 
         />
 
         {/* Overlay */}
-        <div className={`absolute inset-0 ${isDark ? 'bg-black/40' : 'bg-black/30'} group-hover:${isDark ? 'bg-black/60' : 'bg-black/50'} transition-colors duration-300`} />
+        <div className={`absolute inset-0 ${isDark ? 'bg-black/20' : 'bg-black/10'}`} />
 
         {/* Skill Badge */}
         <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold text-black ${skillColor}`}>

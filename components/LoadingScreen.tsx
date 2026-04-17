@@ -31,6 +31,8 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(isLoading);
   const [progress, setProgress] = useState(0);
+  const [showOptions, setShowOptions] = useState(false);
+  const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isLoading) {
@@ -240,35 +242,112 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
                 Crafting digital experiences with code and creativity
               </motion.p>
 
-              {/* Start Buttons */}
+              {/* Start Button */}
               {(onStart || onStartWithoutMusic) && !hasStarted && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1.5, duration: 0.5 }}
-                  className="mt-6 flex flex-col sm:flex-row gap-3 justify-center items-center"
+                  className="mt-6 flex flex-col gap-3 justify-center items-center"
                 >
-                  {onStart && (
+                  {!showOptions ? (
                     <motion.button
                       type="button"
-                      onClick={onStart}
+                      onClick={() => setShowOptions(true)}
                       whileTap={{ scale: 0.92 }}
                       whileHover={{ scale: 1.05 }}
                       className="px-6 py-3 rounded-full bg-black text-white dark:bg-white dark:text-black text-xs md:text-sm font-semibold tracking-wide uppercase shadow-lg hover:shadow-xl transition-all duration-300"
                     >
-                      Start with Music
+                      Open to Start
                     </motion.button>
-                  )}
-                  {onStartWithoutMusic && (
-                    <motion.button
-                      type="button"
-                      onClick={onStartWithoutMusic}
-                      whileTap={{ scale: 0.92 }}
-                      whileHover={{ scale: 1.05 }}
-                      className="px-6 py-3 rounded-full border-2 border-black dark:border-white text-black dark:text-white text-xs md:text-sm font-semibold tracking-wide uppercase shadow-lg hover:shadow-xl hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300"
+                  ) : (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex flex-col gap-6 justify-center items-center"
                     >
-                      Start without Music
-                    </motion.button>
+                      {/* Instruction Text */}
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="text-xs md:text-sm text-black/70 dark:text-white/70 font-light tracking-wide uppercase"
+                      >
+                        Choose your preference:
+                      </motion.p>
+
+                      {/* Icons Container */}
+                      <div className="flex gap-8 justify-center items-end">
+                        {/* With Music Icon */}
+                        {onStart && (
+                          <motion.div
+                            className="flex flex-col items-center gap-2 cursor-pointer"
+                            onClick={onStart}
+                            onHoverStart={() => setHoveredIcon('withMusic')}
+                            onHoverEnd={() => setHoveredIcon(null)}
+                            whileHover={{ y: -5 }}
+                            whileTap={{ scale: 0.95 }}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                          >
+                            <motion.div
+                              className="p-3 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300"
+                              whileHover={{ scale: 1.1 }}
+                            >
+                              <img
+                                src="/img/unmute.svg"
+                                alt="With Music"
+                                className="w-12 h-12"
+                              />
+                            </motion.div>
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: hoveredIcon === 'withMusic' ? 1 : 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="text-xs font-semibold text-black dark:text-white text-center"
+                            >
+                              With Music
+                            </motion.div>
+                          </motion.div>
+                        )}
+
+                        {/* Without Music Icon */}
+                        {onStartWithoutMusic && (
+                          <motion.div
+                            className="flex flex-col items-center gap-2 cursor-pointer"
+                            onClick={onStartWithoutMusic}
+                            onHoverStart={() => setHoveredIcon('withoutMusic')}
+                            onHoverEnd={() => setHoveredIcon(null)}
+                            whileHover={{ y: -5 }}
+                            whileTap={{ scale: 0.95 }}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4 }}
+                          >
+                            <motion.div
+                              className="p-3 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300"
+                              whileHover={{ scale: 1.1 }}
+                            >
+                              <img
+                                src="/img/mute.svg"
+                                alt="Without Music"
+                                className="w-12 h-12"
+                              />
+                            </motion.div>
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: hoveredIcon === 'withoutMusic' ? 1 : 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="text-xs font-semibold text-black dark:text-white text-center"
+                            >
+                              Without Music
+                            </motion.div>
+                          </motion.div>
+                        )}
+                      </div>
+                    </motion.div>
                   )}
                 </motion.div>
               )}

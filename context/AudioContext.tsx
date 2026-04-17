@@ -5,6 +5,7 @@ interface AudioContextType {
     pauseMusic: () => void;
     resumeMusic: () => void;
     isSoundEnabled: boolean;
+    openPlaylist?: () => void;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -13,9 +14,10 @@ interface AudioProviderProps {
     children: React.ReactNode;
     audioRef: React.RefObject<HTMLAudioElement | null>;
     isSoundEnabled: boolean;
+    openPlaylist?: () => void;
 }
 
-export const AudioProvider: React.FC<AudioProviderProps> = ({ children, audioRef, isSoundEnabled }) => {
+export const AudioProvider: React.FC<AudioProviderProps> = ({ children, audioRef, isSoundEnabled, openPlaylist }) => {
     const previousVolumeRef = useRef<number>(0);
 
     const pauseMusic = () => {
@@ -35,7 +37,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children, audioRef
     };
 
     return (
-        <AudioContext.Provider value={{ audioRef, pauseMusic, resumeMusic, isSoundEnabled }}>
+        <AudioContext.Provider value={{ audioRef, pauseMusic, resumeMusic, isSoundEnabled, openPlaylist }}>
             {children}
         </AudioContext.Provider>
     );

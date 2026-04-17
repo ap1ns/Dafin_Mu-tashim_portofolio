@@ -2,16 +2,48 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Music } from 'lucide-react';
 import { useModal } from '../context/ModalContext';
+import { useAudio } from '../context/AudioContext';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onOpenPlaylist?: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onOpenPlaylist }) => {
   const [activeSection, setActiveSection] = useState('home');
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { pathname, hash } = useLocation();
   const navigate = useNavigate();
   const { isModalOpen } = useModal();
+
+  const { openPlaylist } = useAudio();
+
+  const handleMusicPlayerClick = () => {
+    console.log('Music button clicked, onOpenPlaylist:', !!onOpenPlaylist, 'openPlaylist from context:', !!openPlaylist);
+
+    if (onOpenPlaylist) {
+      console.log('Calling onOpenPlaylist from props');
+      onOpenPlaylist();
+      return;
+    }
+
+    if (openPlaylist) {
+      console.log('Calling openPlaylist from context');
+      openPlaylist();
+      return;
+    }
+
+    console.log('Using legacy event fallback');
+    // Legacy fallback for event-based handling.
+    window.dispatchEvent(new CustomEvent('openPlaylist'));
+
+    const anyWindow = window as any;
+    if (typeof anyWindow.openPlaylist === 'function') {
+      anyWindow.openPlaylist();
+    }
+  };
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -84,8 +116,8 @@ const Navbar: React.FC = () => {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           className={`flex items-center gap-1 px-2 py-1.5 md:py-2 rounded-2xl border transition-all duration-700 ${scrolled || !isHome
-              ? 'bg-zinc-900/80 backdrop-blur-2xl border-zinc-700 shadow-[0_20px_50px_rgba(0,0,0,0.3)]'
-              : 'bg-black/10 backdrop-blur-md border-white/10'
+            ? 'bg-zinc-900/80 backdrop-blur-2xl border-zinc-700 shadow-[0_20px_50px_rgba(0,0,0,0.3)]'
+            : 'bg-black/10 backdrop-blur-md border-white/10'
             }`}
         >
           <Link to="/" className="group flex items-center gap-2 md:gap-3 px-3 md:px-4 py-2 mr-1 md:mr-2">
@@ -124,13 +156,27 @@ const Navbar: React.FC = () => {
           <Link to="/#contact" onClick={(e) => handleNavClick(e, '/#contact')} className="px-4 md:px-5 py-2 md:py-2.5 bg-white text-black rounded-xl text-[9px] md:text-[10px] font-black tracking-[0.2em] hover:bg-zinc-200 transition-colors whitespace-nowrap">
             HIRE
           </Link>
+
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log('Button clicked directly');
+              handleMusicPlayerClick();
+            }}
+            className="p-2.5 md:p-3 ml-1 md:ml-2 rounded-xl text-white hover:bg-zinc-800/50 transition-all hover:scale-110 group"
+            title="Open Playlist"
+          >
+            <Music size={18} className="md:w-5 md:h-5 group-hover:animate-pulse" />
+          </button>
         </motion.nav>
       </div>
 
       {/* Mobile Navigation */}
       <div className={`md:hidden flex items-center justify-between px-4 py-3 mx-4 mt-4 rounded-2xl transition-all duration-700 ${scrolled || !isHome
-          ? 'bg-black/20 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]'
-          : 'bg-transparent border border-transparent'
+        ? 'bg-black/20 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]'
+        : 'bg-transparent border border-transparent'
         }`}>
         <Link to="/" className="group flex items-center gap-2">
           <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-black font-display text-base group-hover:rotate-12 transition-transform">
@@ -186,6 +232,20 @@ const Navbar: React.FC = () => {
             >
               HIRE
             </Link>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Mobile button clicked directly');
+                handleMusicPlayerClick();
+                setMobileMenuOpen(false);
+              }}
+              className="px-4 py-3 flex items-center justify-center gap-2 bg-zinc-800 text-white rounded-lg text-sm font-black tracking-[0.15em] hover:bg-zinc-700 transition-colors"
+            >
+              <Music size={16} />
+              PLAYLIST
+            </button>
           </div>
         </div>
       </motion.div>

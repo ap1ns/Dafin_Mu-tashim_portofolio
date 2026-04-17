@@ -25,7 +25,7 @@ export const EDUCATION_DATA: Education[] = [
 export const SKILLS_DATA: Skill[] = [
   {
     id: 'Excel',
-    name: 'Excel Projects Projects',
+    name: 'Excel',
     icon: '<i class="fi fi-sr-dashboard-monitor"></i>',
     imageUrl: '/img/excel.png', // User will add their own image
     color: 'bg-blue-100',
@@ -66,7 +66,7 @@ export const SKILLS_DATA: Skill[] = [
   },
   {
     id: 'word',
-    name: 'Word Projects',
+    name: 'Word',
     icon: '<i class="fi fi-sr-dashboard-monitor"></i>',
     imageUrl: '/img/word.png', // User will add their own image
     color: 'bg-blue-100',
@@ -86,8 +86,8 @@ export const SKILLS_DATA: Skill[] = [
     ]
   },
   {
-    id: 'Powerphoint',
-    name: 'Data Analyst',
+    id: 'Powerpoint',
+    name: 'PowerPoint',
     icon: '<i class="fi fi-sr-dashboard-monitor"></i>',
     imageUrl: '/img/pp.png', // User will add their own image
     color: 'bg-blue-100',
@@ -105,10 +105,6 @@ export const SKILLS_DATA: Skill[] = [
       // }
     ]
   },
-
-
-
-
   {
     id: 'photoshop',
     name: 'Photo editing',
@@ -189,12 +185,6 @@ export const SKILLS_DATA: Skill[] = [
   //     }
   //   ]
   // },
-
-
-
-
-
-
   // {
   //   id: 'capcut',
   //   name: 'video editing',
@@ -236,8 +226,17 @@ export const SKILLS_DATA: Skill[] = [
   //       link: ''
   //     }
   //   ]
-  // }
-];
+  // },
+  {
+    id: 'python',
+    name: 'Python',
+    icon: '<i class="fi fi-sr-code"></i>',
+    imageUrl: '/img/python.png', // User will add their own image
+    color: 'bg-blue-100',
+    projects: [
+    ]
+  },
+]
 
 
 

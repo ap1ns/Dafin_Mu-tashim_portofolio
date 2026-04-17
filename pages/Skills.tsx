@@ -1,23 +1,13 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useScrollVisibility } from '../hooks/useScrollAnimation';
 import Projects from '../link-project/Projects';
 import PageBackground from '../components/PageBackground';
+import StackingCardSwipe from '../components/StackingCardSwipe';
 import { PAGE_BACKGROUNDS } from '../config/pageBackgrounds';
-
-const ANI1_IMAGE = new URL('../img/ANI1.gif', import.meta.url).href;
-const ANI2_IMAGE = new URL('../img/ANI2.gif', import.meta.url).href;
-const ANI3_IMAGE = new URL('../img/ANI3.gif', import.meta.url).href;
-
-const ScrollControlledImage: React.FC<{
-  src: string;
-  alt: string;
-  className?: string;
-}> = ({ src, alt, className = '' }) => (
-  <img src={src} alt={alt} className={`w-full h-full object-cover ${className}`} />
-);
+import { SKILLS_DATA } from '../data';
 
 const FloatingStars: React.FC = () => {
   const stars = React.useMemo(
@@ -66,6 +56,11 @@ const Skills: React.FC = () => {
   const { opacity } = useScrollVisibility();
   const backgroundUrl = isDark ? PAGE_BACKGROUNDS.skills.dark : PAGE_BACKGROUNDS.skills.light;
   const containerRef = useRef<HTMLDivElement>(null);
+  const tabsRef = useRef<HTMLDivElement | null>(null);
+  const scrollAnimationRef = useRef<number | null>(null);
+  const isHoveringTabsRef = useRef(false);
+
+  const [activeSkillId, setActiveSkillId] = useState(SKILLS_DATA[0]?.id || '');
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -75,27 +70,36 @@ const Skills: React.FC = () => {
   const sectionOpacity = useTransform(scrollYProgress, [0, 0.1, 0.8, 1], [0, 1, 1, 0.95]);
   const headerY = useTransform(scrollYProgress, [0, 1], [28, 0]);
 
-  // Transform scroll: scroll down = maju (+y), scroll up = mundur (-y)
-  const yOffset1 = useTransform(scrollYProgress, [0, 1], [-60, 60]);
-  const yOffset2 = useTransform(scrollYProgress, [0, 1], [-75, 75]);
-  const yOffset3 = useTransform(scrollYProgress, [0, 1], [-70, 70]);
-  const rotateGif1 = useTransform(scrollYProgress, [0, 1], [-12, 12]);
-  const rotateGif2 = useTransform(scrollYProgress, [0, 1], [12, -12]);
-  const rotateGif3 = useTransform(scrollYProgress, [0, 1], [-10, 10]);
+  // Auto-scroll horizontal for skills tabs
+  useEffect(() => {
+    const el = tabsRef.current;
+    if (!el) return;
 
-  const imageVariants = {
-    hidden: { opacity: 0, y: 24, scale: 0.92 },
-    visible: (custom: number) => ({
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        delay: 0.25 + custom * 0.15,
-        duration: 0.55,
-        ease: 'easeOut' as any,
-      },
-    }),
-  };
+    const scrollSpeed = 0.4;
+
+    const animateScroll = () => {
+      if (!el) return;
+
+      if (!isHoveringTabsRef.current) {
+        el.scrollLeft += scrollSpeed;
+
+        const maxScroll = el.scrollWidth - el.clientWidth;
+        if (el.scrollLeft >= maxScroll - 1) {
+          el.scrollLeft = 0;
+        }
+      }
+
+      scrollAnimationRef.current = requestAnimationFrame(animateScroll);
+    };
+
+    scrollAnimationRef.current = requestAnimationFrame(animateScroll);
+
+    return () => {
+      if (scrollAnimationRef.current) {
+        cancelAnimationFrame(scrollAnimationRef.current);
+      }
+    };
+  }, []);
 
   return (
     <motion.div ref={containerRef} className={`relative overflow-hidden bg-black py-12 md:py-20 px-4 md:px-6 min-h-screen transition-opacity duration-300`} style={{ opacity: sectionOpacity, transition: 'opacity 0.3s ease-out' }}>
@@ -103,96 +107,87 @@ const Skills: React.FC = () => {
       <FloatingStars />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header Section with GIF */}
-        <motion.div className="mb-16 md:mb-24 flex flex-row gap-4 md:gap-8 items-center" style={{ y: headerY }}>
+        {/* Header Section */}
+        <motion.div className="mb-10 md:mb-14 grid grid-cols-1 lg:grid-cols-[1.35fr_0.9fr] gap-8 items-start" style={{ y: headerY }}>
           {/* Text Content */}
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-4 md:mb-6 text-zinc-500">
+          <div>
+            <div className="flex items-center gap-3 mb-4 md:mb-5 text-zinc-500">
               <Terminal size={14} className="md:size-16" />
               <span className="text-[9px] md:text-[10px] font-black tracking-[0.5em] uppercase">Tech Stack v2.0</span>
             </div>
-            <h2 className="text-5xl sm:text-7xl md:text-8xl font-display leading-[0.85] mb-6 md:mb-8 tracking-tighter uppercase text-white">
-              CORE COMPETENCIES <br />
-              {/* <span className="text-zinc-500">Expertise & Capabilities</span> */}
+            <h2 className="text-5xl sm:text-7xl md:text-8xl font-display leading-[0.85] mb-4 md:mb-5 tracking-tighter uppercase text-white">
+              CORE COMPETENCIES
             </h2>
-            {/* Mobile Version */}
-            <p className="md:hidden text-zinc-400 text-sm leading-relaxed max-w-2xl">
+            <p className="text-zinc-400 text-base leading-relaxed max-w-2xl">
               This section showcases my technical proficiency in administrative tools and data management. Drawing from my background in Computer and Network Engineering, I apply a systematic approach to organizing information, managing inventory, and ensuring operational efficiency. These projects reflect my commitment to accuracy, workflow optimization, and professional documentation.
             </p>
-            {/* Desktop Version */}
-            <p className="hidden md:block text-zinc-400 text-base leading-relaxed max-w-2xl">
-              This section showcases my technical proficiency in administrative tools and data management. Drawing from my background in Computer and Network Engineering, I apply a systematic approach to organizing information, managing inventory, and ensuring operational efficiency. These projects reflect my commitment to accuracy, workflow optimization, and professional documentation.
-            </p>
+
+            {/* Skills Filter Tabs */}
+            <motion.div className="mt-8 md:mt-10">
+              <div
+                ref={tabsRef}
+                className="flex gap-2 md:gap-4 overflow-x-auto scrollbar-hide justify-start pl-2 md:pl-4 pr-2 py-2"
+                style={{
+                  WebkitOverflowScrolling: 'touch',
+                  msOverflowStyle: 'none',
+                  scrollbarWidth: 'none',
+                }}
+                onMouseEnter={() => {
+                  isHoveringTabsRef.current = true;
+                }}
+                onMouseLeave={() => {
+                  isHoveringTabsRef.current = false;
+                }}
+                onTouchStart={() => {
+                  isHoveringTabsRef.current = true;
+                }}
+                onTouchEnd={() => {
+                  isHoveringTabsRef.current = false;
+                }}
+              >
+                {SKILLS_DATA.map((skill) => (
+                  <motion.button
+                    key={skill.id}
+                    onClick={() => setActiveSkillId(skill.id)}
+                    className={`relative flex flex-col items-center justify-center flex-shrink-0 min-w-[4.5rem] md:min-w-[5.5rem] h-20 rounded-xl transition-all duration-300 ${activeSkillId === skill.id
+                        ? `bg-white/40 text-black shadow-md backdrop-blur-lg border border-white/50`
+                        : `bg-zinc-800 text-zinc-300 hover:bg-zinc-700`
+                      }`}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    animate={{ rotate: activeSkillId === skill.id ? -10 : 0 }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                  >
+                    {skill.imageUrl ? (
+                      <img
+                        src={skill.imageUrl}
+                        alt={skill.name}
+                        className="w-8 h-8 md:w-10 md:h-10 object-contain"
+                      />
+                    ) : skill.icon ? (
+                      <span
+                        className="text-2xl"
+                        dangerouslySetInnerHTML={{ __html: skill.icon }}
+                      />
+                    ) : null}
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
           </div>
 
-          {/* Image Section - Right Side */}
-          <motion.div
-            className="flex-shrink-0 flex justify-center md:justify-end md:h-full"
-            initial={{ opacity: 0, scale: 0.8, x: 30 }}
-            whileInView={{ opacity: 1, scale: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
-          >
-            <div className="flex flex-row gap-4 md:gap-6">
-              {/* First cylindrical image */}
-              <motion.div
-                className="w-12 md:w-24 h-32 md:h-64 rounded-xl overflow-hidden shadow-lg"
-                variants={imageVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-50px' }}
-                custom={0}
-                whileHover={{ scale: 1.05, rotate: 2 }}
-                transition={{ duration: 0.3 }}
-                style={{ y: yOffset1, rotate: rotateGif1 }}
-              >
-                <ScrollControlledImage
-                  src={ANI1_IMAGE}
-                  alt="Focus area 1"
-                />
-              </motion.div>
-
-              {/* Second cylindrical image - Hidden on mobile */}
-              <motion.div
-                className="hidden md:block w-16 md:w-24 h-48 md:h-64 rounded-xl overflow-hidden shadow-lg"
-                variants={imageVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-50px' }}
-                custom={1}
-                whileHover={{ scale: 1.05, rotate: -2 }}
-                transition={{ duration: 0.3 }}
-                style={{ y: yOffset2, rotate: rotateGif2 }}
-              >
-                <ScrollControlledImage
-                  src={ANI2_IMAGE}
-                  alt="Focus area 2"
-                />
-              </motion.div>
-
-              {/* Third cylindrical image - Hidden on mobile */}
-              <motion.div
-                className="hidden md:block w-16 md:w-24 h-48 md:h-64 rounded-xl overflow-hidden shadow-lg"
-                variants={imageVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-50px' }}
-                custom={2}
-                whileHover={{ scale: 1.05, rotate: 1 }}
-                transition={{ duration: 0.3 }}
-                style={{ y: yOffset3, rotate: rotateGif3 }}
-              >
-                <ScrollControlledImage
-                  src={ANI3_IMAGE}
-                  alt="Focus area 3"
-                />
-              </motion.div>
-            </div>
-          </motion.div>
+          <div className="hidden lg:flex justify-center lg:justify-end">
+            <StackingCardSwipe />
+          </div>
         </motion.div>
 
         {/* Projects Component */}
-        <Projects showHeader={false} />
+        {/* <Projects showHeader={false} activeSkillId={activeSkillId} onSkillChange={setActiveSkillId} /> */}
+
+        {/* Cards for smaller screens - below Projects */}
+        <div className="lg:hidden flex justify-center mt-16 md:mt-24">
+          <StackingCardSwipe />
+        </div>
       </div>
     </motion.div>
   );

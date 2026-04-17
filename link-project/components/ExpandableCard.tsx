@@ -204,7 +204,7 @@ const ExpandableCard: React.FC<ExpandableCardProps> = ({
                 transition={{ duration: 0.3 }}
                 className="absolute inset-0 flex items-center justify-center cursor-pointer group pointer-events-none"
               >
-                <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-black/80 via-transparent to-black/80" />
+                <div className={`absolute inset-0 pointer-events-none ${isDark ? 'bg-black/20' : 'bg-black/10'}`} />
                 <motion.button
                   onClick={handleExpand}
                   whileHover={{ scale: 1.08, y: -2 }}
