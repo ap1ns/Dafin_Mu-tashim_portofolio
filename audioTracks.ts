@@ -6,7 +6,7 @@ export type AudioTrack = {
 };
 
 const track = (fileName: string, title: string, artist?: string, cover?: string): AudioTrack => ({
-  url: `public/music/${fileName}.mp3`,
+  url: `/music/${fileName}.mp3`,
   title,
   artist,
   cover,
