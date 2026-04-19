@@ -307,7 +307,7 @@ const App: React.FC = () => {
     <ThemeProvider>
       <ModalProvider>
         <EasterEggProvider>
-          <BrowserRouter basename="/dafinportofolio/">
+          <BrowserRouter>
             <AudioProvider
               audioRef={audioRef}
               isSoundEnabled={soundEnabled}
