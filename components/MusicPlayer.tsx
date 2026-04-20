@@ -450,17 +450,27 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({
               {/* Header Section with Album Art */}
               <div className="relative h-72 sm:h-80 md:h-96 bg-gradient-to-b from-zinc-800 to-zinc-900 p-5 sm:p-7 flex flex-row flex-wrap items-center justify-start gap-3 sm:gap-5 md:gap-8">
                 {/* Close Button - Now inside header */}
-                <a
-                  href="#"
+                <button
+                  type="button"
                   onClick={(e) => {
                     e.preventDefault();
+                    e.stopPropagation();
+                    setIsTrackListOpen(false);
+                  }}
+                  onTouchEnd={(e) => {
+                    // Prevent default to avoid ghost clicks on some mobile browsers
+                    e.preventDefault();
+                    e.stopPropagation();
                     setIsTrackListOpen(false);
                   }}
                   aria-label="Close playlist"
-                  className="group absolute top-3 right-3 sm:top-5 sm:right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white transition-all duration-300"
+                  className="absolute top-3 right-3 sm:top-5 sm:right-5 z-[50] p-3 rounded-full bg-black/20 hover:bg-black/40 active:bg-black/60 backdrop-blur-md active:scale-90 transition-all duration-200 text-white flex items-center justify-center cursor-pointer min-w-[44px] min-h-[44px]"
+                  style={{ touchAction: 'manipulation' }}
                 >
-                  <i className="fi fi-sr-left"></i>
-                </a>
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
 
                 {/* Background Gradient Effect */}
                 <div className="absolute inset-0 opacity-30">

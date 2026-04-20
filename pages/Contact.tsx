@@ -517,31 +517,94 @@ const Contact: React.FC = () => {
                   <div className="relative z-10 w-full flex flex-col p-5 md:p-8 h-full">
                     {submitStatus === 'success' ? (
                       // Success Message
-                      <div className="relative overflow-hidden w-full h-full rounded-[2rem] flex items-center justify-center">
-                        <img
-                          src="https://i.pinimg.com/originals/df/ee/6e/dfee6e7841913e2b6ecbe9384538b9e6.gif"
-                          alt="Success background"
-                          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30"
+                      <motion.div 
+                        initial={{ opacity: 0 }} 
+                        animate={{ opacity: 1 }} 
+                        className="relative overflow-hidden w-full h-full rounded-[2rem] flex flex-col items-center justify-center bg-black/40"
+                      >
+                        {/* Dynamic background glow */}
+                        <motion.div
+                          animate={{ 
+                            scale: [1, 1.2, 1],
+                            opacity: [0.2, 0.4, 0.2]
+                          }}
+                          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white/10 rounded-full blur-[60px] pointer-events-none"
                         />
-                        <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center">
+                        
+                        {/* Animated rings */}
+                        <motion.div 
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: [0.8, 2.5], opacity: [0, 0.3, 0] }}
+                          transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
+                          className="absolute w-32 h-32 rounded-full border border-white/20 pointer-events-none"
+                        />
+                        <motion.div 
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: [0.8, 2.5], opacity: [0, 0.3, 0] }}
+                          transition={{ duration: 2.5, delay: 0.8, repeat: Infinity, ease: "easeOut" }}
+                          className="absolute w-32 h-32 rounded-full border border-white/20 pointer-events-none"
+                        />
+                        <motion.div 
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: [0.8, 2.5], opacity: [0, 0.3, 0] }}
+                          transition={{ duration: 2.5, delay: 1.6, repeat: Infinity, ease: "easeOut" }}
+                          className="absolute w-32 h-32 rounded-full border border-white/20 pointer-events-none"
+                        />
+                        
+                        <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center w-full">
+                          <motion.div
+                            initial={{ scale: 0, rotate: -180 }}
+                            animate={{ scale: 1, rotate: 0 }}
+                            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
+                            className="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md mb-8 border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.1)] relative overflow-hidden"
+                          >
+                            <motion.div
+                              className="absolute inset-0 bg-white/20"
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ duration: 0.4, delay: 0.4 }}
+                            />
+                            <svg className="w-10 h-10 text-white relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                              <motion.path
+                                initial={{ pathLength: 0 }}
+                                animate={{ pathLength: 1 }}
+                                transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                          </motion.div>
+                          
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.6, duration: 0.5 }}
+                            className="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/80 text-[10px] uppercase tracking-[0.2em] mb-4"
+                          >
+                            Success
+                          </motion.div>
+                          
                           <motion.h3
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2, duration: 0.6 }}
-                            className="text-2xl md:text-3xl font-bold text-white mb-4"
+                            transition={{ delay: 0.7, duration: 0.6 }}
+                            className="text-3xl md:text-4xl font-semibold text-white mb-4 tracking-tight"
                           >
-                            Message Sent
+                            Message Sent!
                           </motion.h3>
+                          
                           <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4, duration: 0.6 }}
-                            className="text-white/70 mb-8"
+                            transition={{ delay: 0.8, duration: 0.6 }}
+                            className="text-white/60 max-w-[280px] mx-auto text-sm leading-relaxed"
                           >
-                            Thank you for reaching out! I'll get back to you within 24 hours.
+                            Thank you for reaching out. I'll get back to you within 24 hours.
                           </motion.p>
                         </div>
-                      </div>
+                      </motion.div>
                     ) : (
                       <>
                         <div className="w-full flex flex-col flex-1">

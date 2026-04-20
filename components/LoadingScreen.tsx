@@ -209,7 +209,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
                     initial="hidden"
                     animate="visible"
                   >
-                    <p className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-black dark:text-white uppercase">
+                    <p className="text-4xl md:text-6xl lg:text-7xl font-Oswald tracking-tight text-black dark:text-white uppercase tracking-[0.1em]">
                       {text}
                     </p>
                   </motion.div>

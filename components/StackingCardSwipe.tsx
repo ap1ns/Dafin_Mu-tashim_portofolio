@@ -75,7 +75,7 @@ const INITIAL_CARDS: CardItem[] = [
     description:
       'Skilled in collecting data and transforming it into systematic, professional reports that support effective decision-making processes.',
     accent: 'from-cyan-500/15 to-violet-500/5',
-    imageUrl: 'https://i.pinimg.com/736x/b8/d9/8c/b8d98c44f9f67afd75a44720360dd3c0.jpg',
+    imageUrl: 'https://i.pinimg.com/736x/5d/aa/cc/5daaccf8af554418fb95b798bd89a9af.jpg',
   },
   {
     id: 'card-8',
@@ -84,7 +84,7 @@ const INITIAL_CARDS: CardItem[] = [
     description:
       'Able to manage high-volume tasks under tight deadlines while maintaining quality and speed in both administrative and field operations.',
     accent: 'from-cyan-500/10 to-violet-500/0',
-    imageUrl: 'https://i.pinimg.com/736x/53/51/69/535169270fbdba18922b3e2cb430d1b0.jpg',
+    imageUrl: 'https://i.pinimg.com/736x/1f/bd/5c/1fbd5c84ef416e5073c9a95adbfc94ed.jpg',
   },
 ];
 
