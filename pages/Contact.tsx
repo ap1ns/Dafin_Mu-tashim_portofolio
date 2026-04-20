@@ -506,7 +506,7 @@ const Contact: React.FC = () => {
                   </div>
                 </motion.div>
                 <motion.div
-                  className="[grid-area:1/1] w-full h-full rounded-2xl sm:rounded-[3rem] overflow-hidden border border-white bg-black/80 shadow-[0_0_50px_rgba(255,255,255,0.05)] backdrop-blur-3xl"
+                  className="[grid-area:1/1] w-full h-full rounded-2xl sm:rounded-[3rem] overflow-hidden border border-white bg-black shadow-[0_0_50px_rgba(255,255,255,0.05)]"
                   style={{
                     backfaceVisibility: 'hidden',
                     WebkitBackfaceVisibility: 'hidden',
