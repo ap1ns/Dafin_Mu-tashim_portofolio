@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Experience } from '../types';
-import { Calendar, Briefcase, Zap } from 'lucide-react';
+import { Calendar, Briefcase, ChevronDown, Building2, CheckCircle } from 'lucide-react';
 
 interface InteractiveStoryBlockProps {
   experience: Experience;
@@ -16,281 +16,200 @@ const InteractiveStoryBlock: React.FC<InteractiveStoryBlockProps> = ({
   isActive,
   onFocus,
   index,
-  totalItems,
 }) => {
-  const [hasClicked, setHasClicked] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const getTypeColor = (type: string) => {
-    const colors: Record<string, { bg: string; text: string; accent: string }> = {
-      'full-time': {
-        bg: 'from-blue-600/10 to-blue-400/5',
-        text: 'text-blue-600 dark:text-blue-400',
-        accent: 'bg-blue-600/20',
+  const getThemeColor = (type: string) => {
+    const themes = {
+      'full-time': { 
+        glow: 'shadow-blue-500/30 dark:shadow-blue-500/20', 
+        text: 'text-blue-600 dark:text-blue-400', 
+        bg: 'bg-blue-500/10 dark:bg-blue-500/20', 
+        border: 'border-blue-500/20 dark:border-blue-400/30', 
+        gradient: 'from-blue-500/20 via-blue-900/5 to-transparent' 
       },
-      freelance: {
-        bg: 'from-purple-600/10 to-purple-400/5',
-        text: 'text-purple-600 dark:text-purple-400',
-        accent: 'bg-purple-600/20',
+      freelance: { 
+        glow: 'shadow-purple-500/30 dark:shadow-purple-500/20', 
+        text: 'text-purple-600 dark:text-purple-400', 
+        bg: 'bg-purple-500/10 dark:bg-purple-500/20', 
+        border: 'border-purple-500/20 dark:border-purple-400/30', 
+        gradient: 'from-purple-500/20 via-purple-900/5 to-transparent' 
       },
-      internship: {
-        bg: 'from-emerald-600/10 to-emerald-400/5',
-        text: 'text-emerald-600 dark:text-emerald-400',
-        accent: 'bg-emerald-600/20',
+      internship: { 
+        glow: 'shadow-emerald-500/30 dark:shadow-emerald-500/20', 
+        text: 'text-emerald-600 dark:text-emerald-400', 
+        bg: 'bg-emerald-500/10 dark:bg-emerald-500/20', 
+        border: 'border-emerald-500/20 dark:border-emerald-400/30', 
+        gradient: 'from-emerald-500/20 via-emerald-900/5 to-transparent' 
       },
-      project: {
-        bg: 'from-amber-600/10 to-amber-400/5',
-        text: 'text-amber-600 dark:text-amber-400',
-        accent: 'bg-amber-600/20',
+      project: { 
+        glow: 'shadow-amber-500/30 dark:shadow-amber-500/20', 
+        text: 'text-amber-600 dark:text-amber-400', 
+        bg: 'bg-amber-500/10 dark:bg-amber-500/20', 
+        border: 'border-amber-500/20 dark:border-amber-400/30', 
+        gradient: 'from-amber-500/20 via-amber-900/5 to-transparent' 
       },
     };
-    return colors[type] || colors['full-time'];
+    return themes[type as keyof typeof themes] || themes['full-time'];
   };
 
-  const getTypeLabel = (type: string) => {
-    return type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ');
-  };
-
-  const colors = getTypeColor(experience.type);
-
-  const containerVariants = {
-    initial: {
-      opacity: 0,
-      y: 20,
-      scale: 0.95,
-    },
-    inactive: {
-      opacity: 0.4,
-      y: 0,
-      scale: isActive ? 0.92 : 1,
-      filter: isActive ? 'blur(2px)' : 'blur(0px)',
-    },
-    active: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      filter: 'blur(0px)',
-    },
-  };
-
-  const contentVariants = {
-    hidden: {
-      opacity: 0,
-      height: 0,
-      transition: { duration: 0.3 },
-    },
-    visible: {
-      opacity: 1,
-      height: 'auto',
-      transition: {
-        duration: 0.4,
-        staggerChildren: 0.08,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 12 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-  };
-
-  const skillVariants = {
-    hidden: { opacity: 0, scale: 0.85 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.2 } },
-  };
+  const theme = getThemeColor(experience.type);
 
   return (
     <motion.div
       layout
-      variants={containerVariants}
-      initial="initial"
-      animate={isActive ? 'active' : 'inactive'}
-      transition={{
-        opacity: { duration: 0.4 },
-        y: { duration: 0.4, ease: [0.23, 1, 0.32, 1] },
-        scale: { duration: 0.4, ease: [0.23, 1, 0.32, 1] },
-        filter: { duration: 0.4 },
-      }}
-      onClick={() => {
-        onFocus();
-        setHasClicked(true);
-      }}
-      className="cursor-pointer group"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: index * 0.1, type: "spring", stiffness: 80 }}
+      onClick={onFocus}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`relative rounded-[2rem] overflow-hidden cursor-pointer backdrop-blur-xl transition-all duration-500 ${
+        isActive 
+          ? `bg-white/80 dark:bg-black/60 border-white/40 dark:border-white/20 shadow-xl ${theme.glow}`
+          : 'bg-white/40 dark:bg-black/40 border-white/20 dark:border-white/10 hover:bg-white/60 dark:hover:bg-black/50 hover:shadow-lg'
+      } border`}
     >
-      {/* Compact State (Always Visible) */}
-      <div
-        className={`
-          relative overflow-hidden rounded-2xl p-5 md:p-7
-          bg-gradient-to-br ${colors.bg}
-          border border-white/10 dark:border-white/5
-          transition-all duration-300
-          ${isActive ? 'ring-2 ring-black/20 dark:ring-white/20 shadow-2xl shadow-black/10 dark:shadow-white/5' : 'hover:border-white/20 dark:hover:border-white/10'}
-        `}
-      >
-        {/* Animated Background Accent */}
-        {isActive && (
-          <motion.div
-            className={`absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-20`}
-            style={{
-              background: colors.accent,
-            }}
-            animate={{
-              rotate: [0, 360],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              rotate: { duration: 20, repeat: Infinity, ease: 'linear' },
-              scale: { duration: 8, repeat: Infinity, ease: 'easeInOut' },
-            }}
-          />
-        )}
+      {/* Background Gradient */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${theme.gradient} opacity-0 transition-opacity duration-700 ${isActive || isHovered ? 'opacity-100' : ''}`} />
 
-        {/* Compact Content */}
-        <div className="relative z-10">
-          {/* Header Row */}
-          <div className="flex items-start justify-between gap-3 mb-3">
-            <div className="flex-1 min-w-0">
-              <motion.h3
-                className="text-lg md:text-xl font-grotesk font-bold text-black dark:text-white line-clamp-2 break-words"
-                animate={{
-                  fontSize: isActive ? '1.375rem' : '1.125rem',
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                {experience.title}
-              </motion.h3>
-            </div>
+      {/* Glossy Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/40 dark:from-white/0 dark:via-white/5 dark:to-white/10 pointer-events-none" />
 
-            {/* Type Badge */}
-            <motion.div
-              animate={{
-                scale: isActive ? 1.05 : 1,
-                opacity: isActive ? 1 : 0.7,
-              }}
-              transition={{ duration: 0.3 }}
-              className={`
-                inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg
-                text-xs font-bold whitespace-nowrap flex-shrink-0
-                ${colors.text} ${colors.accent}
-              `}
-            >
-              <Briefcase size={12} />
-              <span>{getTypeLabel(experience.type)}</span>
+      <div className="relative z-10 p-6 md:p-8">
+        {/* Header Row */}
+        <div className="flex flex-col md:flex-row md:items-center gap-5 md:gap-6">
+          {/* Icon/Avatar */}
+          <motion.div 
+            layout
+            className={`w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 ${theme.bg} ${theme.border} border shadow-inner`}
+            whileHover={{ rotate: 10, scale: 1.05 }}
+            transition={{ type: 'spring', stiffness: 300 }}
+          >
+            <Briefcase className={`w-7 h-7 ${theme.text}`} />
+          </motion.div>
+
+          {/* Title & Company */}
+          <div className="flex-1">
+            <motion.h3 layout className="text-xl md:text-3xl font-bold text-black dark:text-white mb-2 tracking-tight">
+              {experience.title}
+            </motion.h3>
+            <motion.div layout className="flex flex-wrap items-center gap-3 md:gap-4 text-sm font-medium text-black/60 dark:text-white/60">
+              <span className="flex items-center gap-1.5 text-black/80 dark:text-white/80 font-bold px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 shadow-sm">
+                <Building2 size={14} />
+                {experience.company}
+              </span>
+              <span className="flex items-center gap-1.5 font-semibold">
+                <Calendar size={14} className={theme.text} />
+                {experience.period}
+              </span>
             </motion.div>
           </div>
 
-          {/* Company & Period Row */}
-          <div className="mb-3 space-y-1">
-            <p className="text-sm font-semibold text-black/70 dark:text-white/70">
-              {experience.company}
-            </p>
-            <div className="flex items-center gap-2 text-xs text-black/60 dark:text-white/60">
-              <Calendar size={13} />
-              <span>{experience.period}</span>
-            </div>
+          {/* Right Action */}
+          <div className={`hidden md:flex items-center justify-center w-12 h-12 rounded-full backdrop-blur-md border transition-all duration-300 shadow-sm ${isActive ? `${theme.bg} ${theme.border} ${theme.text}` : 'bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/10 text-black/50 dark:text-white/50'}`}>
+            <motion.div animate={{ rotate: isActive ? 180 : 0 }} transition={{ type: "spring", stiffness: 200, damping: 15 }}>
+              <ChevronDown size={24} />
+            </motion.div>
           </div>
+        </div>
 
-          {/* Description Preview */}
-          <p className="text-sm text-black/80 dark:text-white line-clamp-2 leading-relaxed">
-            {experience.description}
-          </p>
-
-          {/* Interactive Indicator */}
+        {/* Compact description (visible only when NOT active) */}
+        <AnimatePresence>
           {!isActive && (
             <motion.div
-              className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-black/60 dark:text-white/60"
-              animate={{ x: [0, 2, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4 md:pl-[5.5rem]"
             >
-              <Zap size={12} />
-              <span>Click to explore</span>
+              <p className="text-sm md:text-base text-black/70 dark:text-white/70 line-clamp-2 leading-relaxed">
+                {experience.description}
+              </p>
             </motion.div>
           )}
-        </div>
-      </div>
+        </AnimatePresence>
 
-      {/* Expanded Content (Appears Below When Active) */}
-      <AnimatePresence>
-        {isActive && (
-          <motion.div
-            variants={contentVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            className="overflow-hidden"
-          >
-            <motion.div className="mt-4 space-y-5" variants={contentVariants}>
-              {/* Full Description */}
-              <motion.div
-                variants={itemVariants}
-                className="bg-white/50 dark:bg-white/15 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-white/30 dark:border-white/20"
-              >
-                <h4 className="text-xs font-bold tracking-widest uppercase text-black/70 dark:text-white/80 mb-3">
-                  Overview
-                </h4>
-                <p className="text-sm md:text-base text-black/85 dark:text-white leading-relaxed">
-                  {experience.description}
-                </p>
-              </motion.div>
+        {/* Expanded Content */}
+        <AnimatePresence>
+          {isActive && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="pt-8 mt-6 border-t border-black/10 dark:border-white/10">
+                <div className="grid md:grid-cols-[1.5fr,1fr] gap-8 md:gap-12">
+                  {/* Left Column: Description & Highlights */}
+                  <div className="space-y-8">
+                    <div>
+                      <h4 className="flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-black/50 dark:text-white/50 mb-4">
+                        <span className={`w-2 h-2 rounded-full ${theme.bg} border ${theme.border}`} />
+                        Overview
+                      </h4>
+                      <p className="text-base text-black/80 dark:text-white/90 leading-relaxed font-medium">
+                        {experience.description}
+                      </p>
+                    </div>
 
-              {/* Key Highlights */}
-              {experience.highlights.length > 0 && (
-                <motion.div
-                  variants={itemVariants}
-                  className="bg-white/50 dark:bg-white/15 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-white/30 dark:border-white/20"
-                >
-                  <h4 className="text-xs font-bold tracking-widest uppercase text-black/70 dark:text-white/80 mb-4">
-                    Key Achievements
-                  </h4>
-                  <ul className="space-y-2">
-                    {experience.highlights.map((highlight, idx) => (
-                      <motion.li
-                        key={idx}
-                        variants={itemVariants}
-                        className="flex gap-3 items-start text-sm text-black/80 dark:text-white"
-                      >
-                        <motion.span
-                          initial={{ scale: 0, rotate: -180 }}
-                          animate={{ scale: 1, rotate: 0 }}
-                          transition={{ delay: idx * 0.05, duration: 0.3 }}
-                          className="flex-shrink-0 w-5 h-5 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center mt-0.5 font-bold text-xs"
-                        >
-                          ✓
-                        </motion.span>
-                        <span>{highlight}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
-                </motion.div>
-              )}
-
-              {/* Skills */}
-              {experience.skills.length > 0 && (
-                <motion.div
-                  variants={itemVariants}
-                  className="bg-white/50 dark:bg-white/15 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-white/30 dark:border-white/20"
-                >
-                  <h4 className="text-xs font-bold tracking-widest uppercase text-black/70 dark:text-white/80 mb-4">
-                    Skills & Tools
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {experience.skills.map((skill, idx) => (
-                      <motion.span
-                        key={idx}
-                        variants={skillVariants}
-                        custom={idx}
-                        className="px-3 py-1.5 rounded-lg bg-black/10 dark:bg-white/20 text-black/80 dark:text-white text-xs font-semibold border border-black/20 dark:border-white/30 hover:bg-black/15 dark:hover:bg-white/30 transition-colors"
-                      >
-                        {skill}
-                      </motion.span>
-                    ))}
+                    {experience.highlights && experience.highlights.length > 0 && (
+                      <div>
+                        <h4 className="flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-black/50 dark:text-white/50 mb-5">
+                          <span className={`w-2 h-2 rounded-full ${theme.bg} border ${theme.border}`} />
+                          Key Impact
+                        </h4>
+                        <div className="space-y-4">
+                          {experience.highlights.map((highlight, idx) => (
+                            <motion.div
+                              key={idx}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.1 + idx * 0.1, type: "spring", stiffness: 100 }}
+                              className="flex items-start gap-4 p-4 rounded-2xl bg-white/50 dark:bg-white/5 border border-black/5 dark:border-white/5 shadow-sm hover:bg-white/80 dark:hover:bg-white/10 transition-colors"
+                            >
+                              <CheckCircle className={`w-6 h-6 mt-0.5 flex-shrink-0 ${theme.text}`} />
+                              <span className="text-sm md:text-base text-black/80 dark:text-white/80 leading-relaxed font-medium">
+                                {highlight}
+                              </span>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </motion.div>
-              )}
+
+                  {/* Right Column: Skills */}
+                  {experience.skills && experience.skills.length > 0 && (
+                    <div>
+                      <h4 className="flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-black/50 dark:text-white/50 mb-5">
+                        <span className={`w-2 h-2 rounded-full ${theme.bg} border ${theme.border}`} />
+                        Technologies & Skills
+                      </h4>
+                      <div className="flex flex-wrap gap-2 md:gap-3">
+                        {experience.skills.map((skill, idx) => (
+                          <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            transition={{ delay: 0.2 + idx * 0.05, type: "spring" }}
+                            className={`px-4 py-2 rounded-xl text-xs md:text-sm font-bold bg-white/80 dark:bg-black/50 border border-black/10 dark:border-white/10 text-black/80 dark:text-white/80 shadow-sm backdrop-blur-md hover:scale-105 hover:shadow-md transition-all cursor-default`}
+                          >
+                            {skill}
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
+      </div>
     </motion.div>
   );
 };

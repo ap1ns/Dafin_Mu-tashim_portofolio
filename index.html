@@ -21,11 +21,22 @@
 
   <script>
     tailwind.config = {
-      darkMode: 'class'
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            unica: ['"Unica One"', 'sans-serif'],
+            anonymous: ['"Anonymous Pro"', 'monospace'],
+            Jacquard_12: ['"Jacquard 12"', 'cursive'],
+            Almendra_SC: ['"Almendra SC"', 'cursive'],
+            Caesar_Dressing: ['"Caesar Dressing"', 'cursive'],
+          }
+        }
+      }
     }
   </script>
   <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Almendra+SC&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Unica+One&family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Jacquard+12&display=swap"
     rel="stylesheet">
   <style>
     :root {

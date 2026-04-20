@@ -684,8 +684,18 @@ const Contact: React.FC = () => {
             Closing Thoughts
           </motion.span>
           <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter text-black dark:text-white max-w-4xl leading-[1.2] tracking-tight relative z-10 font-medium">
-            "Turning complex operations into <span className="italic text-zinc-400 font-light">seamless</span> experiences."
+            "Life is actually simple, it is our<span className="italic text-zinc-400 font-light">pride and our own thoughts</span>  that make it complicated."
           </h3>
+
+          {/* Penambahan Nama Author */}
+            <motion.p 
+              className="mt-8 text-sm md:text-base text-zinc-500 dark:text-zinc-400 font-light tracking-widest relative z-10"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
+              — Dafin Mutashim    
+            </motion.p>
         </motion.div>
       </div>
     </motion.div>

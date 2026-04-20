@@ -8,6 +8,7 @@ import PageBackground from '../components/PageBackground';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { PAGE_BACKGROUNDS } from '../config/pageBackgrounds';
 
+
 const About: React.FC = () => {
   const { isDark } = useTheme();
   const { opacity } = useScrollVisibility();
@@ -132,16 +133,17 @@ const About: React.FC = () => {
               className="bg-black dark:bg-white text-white dark:text-black rounded-[2rem] p-6 md:p-8 lg:aspect-square h-32 lg:h-auto flex flex-col justify-end"
               whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}
             >
-              <motion.div className="mb-4 md:mb-5 w-[220px] md:w-50 translate-y-[38px] translate-y-[61px] translate-x-[-60px]">
+              {/* <motion.div className="mb-4 md:mb-5 w-[220px] md:w-50 translate-y-[38px] translate-y-[61px] translate-x-[-60px]">
                 <DotLottieReact
                   src="https://lottie.host/adc2f2fe-c868-406b-9851-077333d16cd1/pirKpHVawr.lottie"
                   loop
                   autoplay
                   className="w-full h-full"
                 />
-              </motion.div>
-              <h4 className="font-bold text-lg md:text-xl">Continuous Learning</h4>
-              <p className="text-xs md:text-sm text-zinc-400 dark:text-zinc-600">
+              </motion.div> */}
+
+              <h4 className="font-unica text-lg md:text-xl">Continuous Learning</h4>
+              <p className="font-anonymous text-xs md:text-sm text-zinc-400 dark:text-zinc-600">
                 Data Analyst
               </p>
             </motion.div>

@@ -205,7 +205,7 @@ const Home: React.FC = () => {
 
             <motion.h1
               variants={itemVariant}
-              className="text-[18vw] sm:text-[15vw] lg:text-[12rem] font-display leading-[0.75] md:leading-[0.7] mb-8 md:mb-12 select-none tracking-tighter uppercase text-black dark:text-white"
+              className="font-Caesar_Dressing text-[18vw] sm:text-[15vw] lg:text-[9rem] font-display leading-[0.75] md:leading-[0.7] mb-8 md:mb-12 select-none tracking-tighter uppercase text-black dark:text-white"
               style={{ rotate: titleRotate }}
             >
               <span>
