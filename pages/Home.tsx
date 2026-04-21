@@ -6,10 +6,12 @@ import { useScrollVisibility } from '../hooks/useScrollAnimation';
 import PageBackground from '../components/PageBackground';
 import { PAGE_BACKGROUNDS } from '../config/pageBackgrounds';
 import '../styles/home-animations.css';
+import { useLanguage } from '../context/LanguageContext';
 
 const Home: React.FC = () => {
   const { isDark } = useTheme();
   const { opacity } = useScrollVisibility();
+  const { t } = useLanguage();
   const backgroundUrl = isDark ? PAGE_BACKGROUNDS.home.dark : PAGE_BACKGROUNDS.home.light;
   const [particles, setParticles] = useState<
     Array<{ id: number; x: number; y: number; size: number; delay: number }>
@@ -74,110 +76,12 @@ const Home: React.FC = () => {
       className={`relative min-h-screen transition-opacity duration-300`}
       style={{ opacity, transition: 'opacity 0.3s ease-out' }}
     >
-      <PageBackground url={backgroundUrl} fixed={true} />
       <motion.section
         ref={sectionRef}
         className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden pt-28 pb-16 md:pt-20"
         style={{ opacity: heroOpacity }}
       >
-        {/* Animated Background Orbs */}
-        <div className="absolute top-0 left-0 w-full h-full -z-10 pointer-events-none overflow-hidden">
-          {/* Floating Orbs */}
-          <motion.div
-            className="absolute w-64 h-64 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-400/10 blur-3xl"
-            animate={{
-              y: [0, -50, 0],
-              x: [0, 30, 0],
-              rotate: [0, 180, 360],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: easeInOut,
-            }}
-            style={{
-              top: '10%',
-              left: '10%',
-              y: floatingOrb1Y,
-              rotate: floatingOrb1Rotate,
-            }}
-          />
-          <motion.div
-            className="absolute w-56 h-56 rounded-full bg-gradient-to-br from-cyan-400/15 to-blue-400/10 blur-3xl"
-            animate={{
-              y: [0, 60, 0],
-              x: [0, -40, 0],
-              rotate: [360, 180, 0],
-            }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              ease: easeInOut,
-            }}
-            style={{
-              bottom: '15%',
-              right: '5%',
-              y: floatingOrb2Y,
-              rotate: floatingOrb2Rotate,
-            }}
-          />
-          <motion.div
-            className="absolute w-72 h-72 rounded-full bg-gradient-to-br from-pink-300/15 to-purple-400/10 blur-3xl"
-            animate={{
-              y: [0, -40, 0],
-              x: [0, 50, 0],
-            }}
-            transition={{
-              duration: 22,
-              repeat: Infinity,
-              ease: easeInOut,
-            }}
-            style={{
-              top: '50%',
-              right: '10%',
-              y: floatingOrb3Y,
-              x: floatingOrb3X,
-            }}
-          />
 
-          {/* Base Background Gradients */}
-          <div className="absolute top-0 left-0 w-full h-full -z-10 pointer-events-none">
-            <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-zinc-100 dark:bg-zinc-800 rounded-full blur-[120px]" />
-            <div className="absolute bottom-[10%] right-[-5%] w-[40%] h-[40%] bg-zinc-50 dark:bg-zinc-900 rounded-full blur-[120px]" />
-          </div>
-
-          {/* Floating Particles */}
-          {particles.map((particle) => (
-            <motion.div
-              key={particle.id}
-              className="absolute rounded-full pointer-events-none"
-              style={{
-                width: particle.size,
-                height: particle.size,
-                left: `${particle.x}%`,
-                top: `${particle.y}%`,
-                background: isDark
-                  ? `rgba(${100 + particle.id * 10}, ${150 + particle.id * 5}, 255, 0.6)`
-                  : `rgba(${200 + particle.id * 5}, ${200 + particle.id * 5}, 220, 0.4)`,
-                boxShadow: isDark
-                  ? `0 0 ${particle.size * 3}px rgba(${100 + particle.id * 10}, ${150 + particle.id * 5}, 255, 0.8)`
-                  : `0 0 ${particle.size * 2}px rgba(${150 + particle.id * 5}, ${150 + particle.id * 5}, 200, 0.5)`,
-                y: particlesY,
-              }}
-              animate={{
-                y: [0, -200, -400],
-                x: [Math.random() * 100 - 50, Math.random() * 100 - 50],
-                opacity: [0, 1, 0],
-              }}
-              transition={{
-                duration: 8 + Math.random() * 4,
-                repeat: Infinity,
-                delay: particle.delay,
-                ease: easeOut,
-              }}
-            />
-          ))}
-        </div>
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-12 items-center w-full">
           <motion.div
@@ -199,7 +103,7 @@ const Home: React.FC = () => {
                 <Zap size={10} className="fill-white" />
               </motion.div>
               <span className="text-[9px] font-black tracking-[0.4em] uppercase text-zinc-400">
-                LOGISTICS & OPERATIONS ENTHUSIAST
+                {t('logisticsEnthusiast')}
               </span>
             </motion.div>
 
@@ -262,8 +166,7 @@ const Home: React.FC = () => {
                   ease: easeInOut,
                 }}
               >
-                Supporting seamless distribution through precise data administration and efficient
-                warehouse operations
+                {t('homeDescription2')}
               </motion.p>
               <motion.div variants={itemVariant} className="flex items-center gap-4">
                 <motion.div
@@ -304,7 +207,7 @@ const Home: React.FC = () => {
                     ease: easeInOut,
                   }}
                 >
-                  Scroll to explore my work
+                  {t('scrollExplore')}
                 </motion.span>
               </motion.div>
             </motion.div>
@@ -322,7 +225,7 @@ const Home: React.FC = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10 flex items-center gap-4">
-                  DOWNLOAD CV{' '}
+                  {t('downloadCV')}{' '}
                   <ArrowRight
                     size={14}
                     className="group-hover:translate-x-1 transition-transform"

@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Mail, MessageSquare, Instagram, Music2, Linkedin, Youtube } from 'lucide-react';
 import emailjs from 'emailjs-com';
@@ -8,6 +9,7 @@ import PageBackground from '../components/PageBackground';
 import { PAGE_BACKGROUNDS } from '../config/pageBackgrounds';
 
 const Contact: React.FC = () => {
+  const { t } = useLanguage();
   const { isDark } = useTheme();
   const { opacity } = useScrollVisibility();
   const backgroundUrl = isDark ? PAGE_BACKGROUNDS.contact.dark : PAGE_BACKGROUNDS.contact.light;
@@ -222,29 +224,7 @@ const Contact: React.FC = () => {
       className={`relative bg-white dark:bg-black py-12 md:py-20 px-6 min-h-screen transition-opacity duration-300`}
       style={{ opacity: sectionOpacity, transition: 'opacity 0.3s ease-out' }}
     >
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-slate-200/10 blur-3xl"
-          animate={{
-            y: [0, 50, 0],
-            x: [0, 40, 0],
-            rotate: [0, 180, 360],
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ y: backgroundOrb1Y, rotate: backgroundOrb1Rotate }}
-        />
-        <motion.div
-          className="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-slate-400/10 blur-3xl"
-          animate={{
-            y: [0, -60, 0],
-            x: [0, -50, 0],
-            rotate: [360, 180, 0],
-          }}
-          transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ y: backgroundOrb2Y, rotate: backgroundOrb2Rotate }}
-        />
-      </div>
+
 
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
@@ -263,24 +243,21 @@ const Contact: React.FC = () => {
               transition={{ duration: 0.6, ease: 'easeOut' }}
               className="text-xs font-bold tracking-[0.3em] text-zinc-400 dark:text-zinc-500 uppercase mb-4 block"
             >
-              Let's Connect
+              {t('letsConnect')}
             </motion.span>
             <motion.h1
               variants={itemVariants}
               transition={{ duration: 0.6, ease: 'easeOut' }}
               className="text-6xl md:text-8xl font-display mb-8 text-black dark:text-white"
             >
-              LET'S CONNECT
+              {t('letsConnect')}
             </motion.h1>
             <motion.p
               variants={itemVariants}
               transition={{ duration: 0.6, ease: 'easeOut' }}
               className="text-zinc-500 dark:text-zinc-400 text-lg mb-12 leading-relaxed max-w-md"
             >
-              f you are looking for a dedicated and detail-oriented professional to support your
-              logistics or administrative operations, feel free to reach out. I am available for
-              interviews and ready to discuss how my skills can contribute to your team. I typically
-              respond within 24 hours
+              {t('contactDescription')}
             </motion.p>
 
             <motion.div
@@ -306,7 +283,7 @@ const Contact: React.FC = () => {
                 </motion.div>
                 <div className="min-w-0 max-w-xs">
                   <p className="text-xs font-bold uppercase tracking-widest opacity-50 transition-colors text-black dark:text-white">
-                    Email Me
+                    {t('emailMe')}
                   </p>
                   <p className="text-xl md:text-xl text-sm font-bold transition-colors text-black dark:text-white truncate">
                     dafinmutashim9@gmail.com
@@ -329,7 +306,7 @@ const Contact: React.FC = () => {
                 </motion.div>
                 <div>
                   <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-3 text-black dark:text-white">
-                    Direct Messages
+                    {t('directMessages')}
                   </p>
                   <motion.div
                     className="flex gap-3"
@@ -435,11 +412,28 @@ const Contact: React.FC = () => {
                   <div className="absolute bottom-0 right-0 w-20 h-20 bg-white/10 rounded-full blur-xl" />
                   <div className="relative z-10 h-full flex flex-col">
                     <div className="relative h-52 md:h-[360px] w-full overflow-hidden">
-                      <PageBackground url={backgroundUrl} blur={false} />
+                      {backgroundUrl && (
+                        backgroundUrl.toLowerCase().endsWith('.mp4') || backgroundUrl.toLowerCase().endsWith('.webm') ? (
+                          <video
+                            src={backgroundUrl}
+                            className="absolute inset-0 w-full h-full object-cover"
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                          />
+                        ) : (
+                          <img
+                            src={backgroundUrl}
+                            alt="Card background"
+                            className="absolute inset-0 w-full h-full object-cover"
+                          />
+                        )
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/90" />
                       <div className="absolute left-6 top-6 text-left">
                         <p className="text-xs uppercase tracking-[0.3em] text-white/90">
-                          Work fast. Live slow.
+                          {t('contactCardText1')}
                         </p>
                       </div>
                     </div>
@@ -453,7 +447,7 @@ const Contact: React.FC = () => {
                           transition={{ delay: 0.2, duration: 0.8, type: 'spring', stiffness: 120 }}
                           className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-semibold text-white leading-tight"
                         >
-                          Reliable & Efficient Support
+                          {t('contactCardText2')}
                         </motion.h2>
 
                         <motion.p
@@ -463,8 +457,7 @@ const Contact: React.FC = () => {
                           transition={{ delay: 0.35, duration: 0.7 }}
                           className="max-w-xl text-xs sm:text-sm md:text-base text-white leading-relaxed"
                         >
-                          From precise data entry to organized warehouse operations. Let's build a
-                          more efficient workflow together
+                          {t('contactCardText3')}
                         </motion.p>
                       </div>
 
@@ -494,12 +487,12 @@ const Contact: React.FC = () => {
                           }}
                           className="relative inline-flex items-center justify-center w-full rounded-[2rem] border border-white/30 bg-white/10 px-10 py-4 text-white text-sm tracking-wider uppercase font-bold shadow-[0_4px_14px_0_rgba(255,255,255,0.1)] backdrop-blur-md transition-colors duration-300"
                         >
-                            Send a message
+                            {t('sendMessageBtn')}
                           </motion.button>
 
                         <div className="flex flex-col gap-1 text-sm text-white/60 md:flex-row md:items-center md:justify-between">
                           <span>Apins.id</span>
-                          <span>operations + inventory + reporting</span>
+                          <span>{t('operationsReporting')}</span>
                         </div>
                       </div>
                     </div>
@@ -583,7 +576,7 @@ const Contact: React.FC = () => {
                             transition={{ delay: 0.6, duration: 0.5 }}
                             className="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/80 text-[10px] uppercase tracking-[0.2em] mb-4"
                           >
-                            Success
+                            {t('successLabel')}
                           </motion.div>
                           
                           <motion.h3
@@ -592,7 +585,7 @@ const Contact: React.FC = () => {
                             transition={{ delay: 0.7, duration: 0.6 }}
                             className="text-3xl md:text-4xl font-semibold text-white mb-4 tracking-tight"
                           >
-                            Message Sent!
+                            {t('messageSent')}
                           </motion.h3>
                           
                           <motion.p
@@ -601,7 +594,7 @@ const Contact: React.FC = () => {
                             transition={{ delay: 0.8, duration: 0.6 }}
                             className="text-white/60 max-w-[280px] mx-auto text-sm leading-relaxed"
                           >
-                            Thank you for reaching out. I'll get back to you within 24 hours.
+                            {t('thankYouMessage')}
                           </motion.p>
                         </div>
                       </motion.div>
@@ -615,7 +608,7 @@ const Contact: React.FC = () => {
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ delay: 0.2, duration: 0.6 }}
                             >
-                              Contact form
+                              {t('contactFormLabel')}
                             </motion.p>
                             <motion.h2
                               className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-semibold text-white leading-tight"
@@ -623,64 +616,64 @@ const Contact: React.FC = () => {
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ delay: 0.35, duration: 0.6 }}
                             >
-                              Tell me about your project.
+                              {t('tellMeProject')}
                             </motion.h2>
                           </div>
                           <form className="space-y-6 flex flex-col" onSubmit={handleSubmit}>
                             <div className="grid gap-5 md:grid-cols-2">
                               <div>
                                 <label className="block text-[13px] font-medium text-white/80 mb-2">
-                                  Name *
+                                  {t('nameLabel')}
                                 </label>
                                 <input
                                   type="text"
                                   name="name"
                                   value={formData.name}
                                   onChange={handleInputChange}
-                                  placeholder="Your full name"
+                                  placeholder={t('namePlaceholder')}
                                   required
                                   className="w-full px-4 py-3 bg-black border border-white/20 rounded-2xl backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/70 text-white placeholder-white/50 text-sm"
                                 />
                               </div>
                               <div>
                                 <label className="block text-[13px] font-medium text-white/80 mb-2">
-                                  Email *
+                                  {t('emailLabel')}
                                 </label>
                                 <input
                                   type="email"
                                   name="email"
                                   value={formData.email}
                                   onChange={handleInputChange}
-                                  placeholder="your.email@example.com"
+                                  placeholder={t('emailPlaceholder')}
                                   required
                                   className="w-full px-4 py-3 bg-black border border-white/20 rounded-2xl backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/70 text-white placeholder-white/50 text-sm"
                                 />
                               </div>
                             </div>
                             <div className="mt-5">
-                              <label className="block text-[13px] font-medium text-white/80 mb-2">
-                                Subject *
-                              </label>
+                                <label className="block text-[13px] font-medium text-white/80 mb-2">
+                                  {t('subjectLabel')}
+                                </label>
                               <input
                                 type="text"
                                 name="subject"
                                 value={formData.subject}
                                 onChange={handleInputChange}
-                                placeholder="What do you want to build?"
+                                placeholder={t('subjectPlaceholder')}
                                 required
                                 className="w-full px-4 py-3 bg-black border border-white/20 rounded-2xl backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/70 text-white placeholder-white/50 text-sm"
                               />
                             </div>
                             <div className="mt-5">
-                              <label className="block text-[13px] font-medium text-white/80 mb-2">
-                                Message *
-                              </label>
+                                <label className="block text-[13px] font-medium text-white/80 mb-2">
+                                  {t('messageLabel')}
+                                </label>
                               <textarea
                                 rows={5}
                                 name="message"
                                 value={formData.message}
                                 onChange={handleInputChange}
-                                placeholder="Tell me about your project or just say hello..."
+                                placeholder={t('messagePlaceholder')}
                                 required
                                 className="w-full px-4 py-3 bg-black border-2 border-white/20 rounded-2xl backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/70 text-white placeholder-white/50 resize-none text-sm shadow-lg"
                               />
@@ -695,17 +688,16 @@ const Contact: React.FC = () => {
                             />
                             {submitStatus === 'error' && (
                               <div className="p-4 bg-red-500/10 border border-red-400/20 rounded-2xl text-red-200 text-sm">
-                                Failed to send message. Please try again.
+                                {t('failedToSend')}
                               </div>
                             )}
                             {submitStatus === 'cooldown' && (
                               <div className="p-4 bg-amber-500/10 border border-amber-400/20 rounded-2xl text-amber-100 text-sm">
-                                You've sent 10 messages. Please wait {cooldownTime}s before sending
-                                more.
+                                {t('rateLimitMessage')} {cooldownTime}{t('rateLimitSuffix')}
                               </div>
                             )}
                             <div className="text-center text-[11px] text-white/40 mb-4">
-                              Your message will be sent to my email.
+                              {t('emailDisclaimer')}
                             </div>
                             <button
                               type="submit"
@@ -713,10 +705,10 @@ const Contact: React.FC = () => {
                               className="w-full py-4 bg-white/10 text-white rounded-[2rem] font-bold tracking-wider uppercase hover:bg-white hover:text-black active:scale-95 transition-all duration-300 ease-out disabled:opacity-50 disabled:cursor-not-allowed text-sm backdrop-blur-md border border-white/30 shadow-[0_4px_14px_0_rgba(255,255,255,0.1)] hover:shadow-[0_6px_20px_rgba(255,255,255,0.23)]"
                             >
                               {isLoading
-                                ? 'Sending...'
+                                ? t('sending')
                                 : submitStatus === 'cooldown'
-                                  ? `Wait ${cooldownTime}s`
-                                  : 'Send Message'}
+                                  ? `${t('wait')} ${cooldownTime}s`
+                                  : t('sendMessage')}
                             </button>
                           </form>
                         </div>
@@ -736,7 +728,7 @@ const Contact: React.FC = () => {
           viewport={{ once: false, margin: '-50px' }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-blue-500/10 blur-[100px] pointer-events-none rounded-full" />
+
           <motion.span
             className="text-xs font-black tracking-[0.4em] text-zinc-500 uppercase mb-8"
             initial={{ opacity: 0, letterSpacing: '0em' }}
@@ -744,11 +736,9 @@ const Contact: React.FC = () => {
             viewport={{ once: false }}
             transition={{ duration: 1.2, delay: 0.2 }}
           >
-            Closing Thoughts
+            {t('closingThoughts')}
           </motion.span>
-          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter text-black dark:text-white max-w-4xl leading-[1.2] tracking-tight relative z-10 font-medium">
-            "Life is actually simple, it is our<span className="italic text-zinc-400 font-light">pride and our own thoughts</span>  that make it complicated."
-          </h3>
+          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter text-black dark:text-white max-w-4xl leading-[1.2] tracking-tight relative z-10 font-medium" dangerouslySetInnerHTML={{ __html: t('quoteText') }} />
 
           {/* Penambahan Nama Author */}
             <motion.p 

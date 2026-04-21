@@ -13,6 +13,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { EasterEggProvider } from './context/EasterEggContext';
 import { AudioProvider } from './context/AudioContext';
 import { ModalProvider } from './context/ModalContext';
+import { LanguageProvider } from './context/LanguageContext';
 import ViewportSection from './components/ViewportSection';
 import MusicPlayer from './components/MusicPlayer';
 import { AUDIO_TRACKS } from './audioTracks';
@@ -57,47 +58,7 @@ const PageLoader = () => (
   </div>
 );
 
-const GlobalFallingStars: React.FC = () => {
-  const stars = React.useMemo(
-    () =>
-      Array.from({ length: 16 }, (_, index) => ({
-        id: index,
-        left: Math.random() * 100,
-        size: Math.random() * 2 + 2,
-        duration: Math.random() * 5 + 6,
-        delay: Math.random() * 4,
-        opacity: Math.random() * 0.35 + 0.55,
-      })),
-    []
-  );
 
-  return (
-    <div className="fixed inset-0 pointer-events-none -z-20 overflow-hidden">
-      {stars.map((star) => (
-        <motion.div
-          key={star.id}
-          className="absolute rounded-full"
-          style={{
-            left: `${star.left}%`,
-            width: `${star.size}px`,
-            height: `${star.size}px`,
-            background: `rgba(255,255,255,${star.opacity})`,
-            boxShadow: `0 0 ${star.size * 3}px rgba(255,255,255,${star.opacity})`,
-            mixBlendMode: 'screen',
-          }}
-          initial={{ y: '-20vh', opacity: 0 }}
-          animate={{ y: ['-20vh', '110vh'], opacity: [0.8, 0.9, 0] }}
-          transition={{
-            duration: star.duration,
-            repeat: Infinity,
-            ease: 'linear',
-            delay: star.delay,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
 
 const MainLayout = () => (
   <PageWrapper>
@@ -306,8 +267,9 @@ const App: React.FC = () => {
   return (
     <ThemeProvider>
       <ModalProvider>
-        <EasterEggProvider>
-          <BrowserRouter>
+        <LanguageProvider>
+          <EasterEggProvider>
+            <BrowserRouter>
             <AudioProvider
               audioRef={audioRef}
               isSoundEnabled={soundEnabled}
@@ -333,32 +295,7 @@ const App: React.FC = () => {
                   hasStarted={hasStarted}
                 />
 
-                {/* Creative Background Elements */}
-                <GlobalFallingStars />
-                <div className="fixed inset-0 -z-20 pointer-events-none overflow-hidden">
-                  {/* Dark mode background only */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-black via-blue-950 to-purple-950" />
 
-                  {/* Animated gradient orbs - Dark mode only */}
-                  <div className="absolute -top-32 left-[5%] w-[500px] h-[500px] bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full blur-[80px] opacity-30 animate-pulse" />
-                  <div className="absolute top-1/4 right-[2%] w-[450px] h-[450px] bg-gradient-to-r from-purple-600 to-pink-500 rounded-full blur-[90px] opacity-30 animate-pulse animation-delay-2000" />
-                  <div className="absolute -bottom-32 left-1/3 w-[550px] h-[550px] bg-gradient-to-r from-cyan-600 to-blue-500 rounded-full blur-[100px] opacity-30 animate-pulse animation-delay-4000" />
-                  <div className="absolute top-1/2 right-1/4 w-[400px] h-[400px] bg-gradient-to-r from-pink-600 to-rose-500 rounded-full blur-[80px] opacity-25 animate-pulse animation-delay-3000" />
-
-                  {/* Grid pattern overlay */}
-                  <div className="absolute inset-0 bg-grid-pattern dark:bg-grid-pattern-dark opacity-20" />
-
-                  {/* Radial gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20" />
-
-                  {/* Noise texture */}
-                  <div
-                    className="absolute inset-0 opacity-[0.12] bg-noise"
-                    style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' seed='2' /%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-                    }}
-                  />
-                </div>
 
                 <AppContent loadingComplete={loadingComplete} openPlaylist={openPlaylist} />
 
@@ -381,8 +318,9 @@ const App: React.FC = () => {
                 />
               </div>
             </AudioProvider>
-          </BrowserRouter>
-        </EasterEggProvider>
+            </BrowserRouter>
+          </EasterEggProvider>
+        </LanguageProvider>
       </ModalProvider>
     </ThemeProvider>
   );

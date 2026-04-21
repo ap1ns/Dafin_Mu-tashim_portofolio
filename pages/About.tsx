@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import { motion } from 'framer-motion';
 import { GraduationCap, Award, BookOpen } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -10,6 +11,7 @@ import { PAGE_BACKGROUNDS } from '../config/pageBackgrounds';
 
 
 const About: React.FC = () => {
+  const { t } = useLanguage();
   const { isDark } = useTheme();
   const { opacity } = useScrollVisibility();
   const backgroundUrl = isDark ? PAGE_BACKGROUNDS.about.dark : PAGE_BACKGROUNDS.about.light;
@@ -86,26 +88,20 @@ const About: React.FC = () => {
               variants={itemVariants}
               className="text-xs font-bold tracking-[0.3em] text-zinc-400 dark:text-zinc-500 uppercase mb-4 block"
             >
-              ABOUT ME
+              {t('aboutTitle')}
             </motion.span>
             <motion.h1
               variants={itemVariants}
               className="text-6xl md:text-8xl font-display mb-8 text-white"
             >
-              DRIVING EFFICIENCY IN LOGISTICS & OPERATIONS
+              {t('aboutTitle2')}
             </motion.h1>
             <motion.div
               variants={containerVariants}
               className="space-y-6 text-zinc-400 leading-relaxed text-lg"
             >
               <motion.p variants={itemVariants}>
-                I am a Computer and Network Engineering graduate with a strong focus on logistics
-                and warehouse operations. With hands-on experience in sales administration and
-                inventory management for online retail, I am highly proficient in recording
-                transactions, picking and packing, and ensuring product accuracy before shipment. I
-                am a detail-oriented, disciplined team player committed to supporting smooth
-                distribution workflows through efficient data management and time-sensitive
-                operations.
+                {t('aboutDesc2')}
               </motion.p>
             </motion.div>
           </motion.div>
@@ -123,8 +119,8 @@ const About: React.FC = () => {
               whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}
             >
               <img
-                src="img/StudioGhibli.gif"
-                alt="Award Winner"
+                src="https://i.pinimg.com/originals/73/63/3f/73633fbb5a6fb64fa41ae315ba897d97.gif"
+                alt="gif about"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
             </motion.div>
@@ -142,9 +138,9 @@ const About: React.FC = () => {
                 />
               </motion.div> */}
 
-              <h4 className="font-unica text-lg md:text-xl">Continuous Learning</h4>
+              <h4 className="font-unica text-lg md:text-xl">{t('continuousLearning')}</h4>
               <p className="font-anonymous text-xs md:text-sm text-zinc-400 dark:text-zinc-600">
-                Data Analyst
+                {t('dataAnalyst')}
               </p>
             </motion.div>
             <motion.div
@@ -153,13 +149,13 @@ const About: React.FC = () => {
               whileHover={{ scale: 1.03 }}
             >
               <img
-                src="https://i.pinimg.com/736x/98/b6/ac/98b6ac5ca5706d58d748db6479527427.jpg"
+                src="https://i.pinimg.com/736x/a9/25/8d/a9258d3e53c748c246afc39dac67167f.jpg"
                 alt="Workspace"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-40"
               />
               <div className="relative z-10 h-full flex flex-col justify-end">
-                <h4 className="text-3xl font-display uppercase text-white">BASED IN BANDUNG</h4>
-                <p className="text-zinc-400 font-medium">Available for remote collaboration</p>
+                <h4 className="text-3xl font-display uppercase text-white">{t('basedInBandung')}</h4>
+                <p className="text-zinc-400 font-medium">{t('availableForRemote')}</p>
               </div>
             </motion.div>
           </motion.div>
@@ -191,7 +187,7 @@ const About: React.FC = () => {
               variants={itemVariants}
               className="text-4xl md:text-5xl font-display text-white"
             >
-              Academic Journey
+              {t('academicJourney')}
             </motion.h2>
           </motion.div>
 
@@ -212,17 +208,17 @@ const About: React.FC = () => {
                 <div className="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-white border-4 border-zinc-900" />
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
                   <div>
-                    <h3 className="text-2xl font-bold text-white">{edu.institution}</h3>
-                    <p className="text-zinc-400 font-semibold">{edu.degree}</p>
+                    <h3 className="text-2xl font-bold text-white">{t(`eduInstitution_${index}` as any)}</h3>
+                    <p className="text-zinc-400 font-semibold">{t(`eduDegree_${index}` as any)}</p>
                   </div>
                   <motion.span
                     className="px-4 py-1.5 bg-zinc-800 rounded-full text-xs font-bold tracking-widest text-zinc-500 border border-zinc-700 uppercase"
                     whileHover={{ scale: 1.05 }}
                   >
-                    {edu.period}
+                    {t(`eduPeriod_${index}` as any)}
                   </motion.span>
                 </div>
-                <p className="text-zinc-400 leading-relaxed max-w-3xl">{edu.description}</p>
+                <p className="text-zinc-400 leading-relaxed max-w-3xl">{t(`eduDesc_${index}` as any)}</p>
               </motion.div>
             ))}
           </motion.div>

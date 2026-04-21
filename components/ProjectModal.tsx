@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink } from 'lucide-react';
 import { Skill } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ProjectModalProps {
   skill: Skill | null;
@@ -9,6 +10,7 @@ interface ProjectModalProps {
 }
 
 const ProjectModal: React.FC<ProjectModalProps> = ({ skill, onClose }) => {
+  const { t } = useLanguage();
   if (!skill) return null;
 
   return (
@@ -49,7 +51,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ skill, onClose }) => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              Exploring
+              {t('exploring')}
             </motion.span>
             <motion.h2
               className="text-4xl md:text-5xl font-display mb-2"
@@ -57,7 +59,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ skill, onClose }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              {skill.name} Projects
+              {skill.name} {t('projectsSuffix')}
             </motion.h2>
             <motion.div
               className="w-20 h-1 bg-black rounded-full"

@@ -1,0 +1,218 @@
+/* ═══════════════════════════════════════════════════════════
+   Coming Soon Display — Animations & Layout
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Container ─────────────────────────────────────────── */
+.coming-soon-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+  min-height: 220px;
+}
+
+.coming-soon-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  text-align: center;
+  padding: 2.5rem 2rem;
+  border-radius: 2rem;
+  position: relative;
+}
+
+/* ─── Skill Label ───────────────────────────────────────── */
+.coming-soon-skill-label {
+  display: inline-block;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(161, 161, 170, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(4px);
+}
+
+/* ─── Main Heading ──────────────────────────────────────── */
+.coming-soon-heading {
+  font-size: clamp(1.75rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: white;
+  position: relative;
+  font-family: inherit;
+}
+
+/* ─── Subtitle ──────────────────────────────────────────── */
+.coming-soon-subtitle {
+  font-size: 0.875rem;
+  color: rgba(161, 161, 170, 0.6);
+  max-width: 360px;
+  line-height: 1.6;
+}
+
+/* ─── Decorative Line ───────────────────────────────────── */
+.coming-soon-line {
+  height: 2px;
+  border-radius: 1px;
+  margin-top: 0.25rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Animation 1: Typewriter
+   ═══════════════════════════════════════════════════════════ */
+.coming-soon-typewriter {
+  display: inline;
+}
+
+.coming-soon-cursor {
+  display: inline;
+  color: rgba(34, 197, 94, 0.8);
+  font-weight: 300;
+  margin-left: 2px;
+  transition: opacity 0.1s;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Animation 2: Glitch
+   ═══════════════════════════════════════════════════════════ */
+.coming-soon-glitch {
+  position: relative;
+  display: inline-block;
+  animation: comingSoonGlitchMain 3s ease-in-out infinite;
+}
+
+.coming-soon-glitch::before,
+.coming-soon-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.coming-soon-glitch::before {
+  color: rgba(59, 130, 246, 0.7);
+  animation: comingSoonGlitchBefore 3s ease-in-out infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+}
+
+.coming-soon-glitch::after {
+  color: rgba(239, 68, 68, 0.5);
+  animation: comingSoonGlitchAfter 3s ease-in-out infinite;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+}
+
+@keyframes comingSoonGlitchMain {
+  0%, 100% { transform: translate(0); }
+  2% { transform: translate(-2px, 1px); }
+  4% { transform: translate(2px, -1px); }
+  6% { transform: translate(0); }
+  40% { transform: translate(0); }
+  42% { transform: translate(-1px, 2px); }
+  44% { transform: translate(1px, -1px); }
+  46% { transform: translate(0); }
+}
+
+@keyframes comingSoonGlitchBefore {
+  0%, 100% { transform: translate(0); }
+  2% { transform: translate(3px, -1px); }
+  4% { transform: translate(-3px, 1px); }
+  6% { transform: translate(0); }
+  40% { transform: translate(0); }
+  42% { transform: translate(2px, 1px); }
+  44% { transform: translate(-2px, -1px); }
+  46% { transform: translate(0); }
+}
+
+@keyframes comingSoonGlitchAfter {
+  0%, 100% { transform: translate(0); }
+  2% { transform: translate(-3px, 2px); }
+  4% { transform: translate(3px, -2px); }
+  6% { transform: translate(0); }
+  40% { transform: translate(0); }
+  42% { transform: translate(-1px, -2px); }
+  44% { transform: translate(1px, 2px); }
+  46% { transform: translate(0); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Animation 3: Wave (letters) — mostly driven by framer-motion
+   ═══════════════════════════════════════════════════════════ */
+.coming-soon-wave-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  perspective: 600px;
+}
+
+.coming-soon-wave-letter {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Animation 4: Brush Reveal
+   ═══════════════════════════════════════════════════════════ */
+.coming-soon-brush-wrapper {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.coming-soon-brush-text {
+  display: inline-block;
+  will-change: clip-path;
+}
+
+.coming-soon-brush-bar {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(168, 85, 247, 0.3), rgba(168, 85, 247, 0.15));
+  border-radius: 4px;
+  will-change: left, width;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Animation 5: Code Decode / Scramble
+   ═══════════════════════════════════════════════════════════ */
+.coming-soon-decode {
+  display: inline-block;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  letter-spacing: 0.04em;
+  color: rgba(234, 179, 8, 0.95);
+  text-shadow: 0 0 20px rgba(234, 179, 8, 0.15);
+  transition: color 0.3s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Responsive Adjustments
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .coming-soon-container {
+    padding: 2rem 0.5rem;
+    min-height: 180px;
+  }
+
+  .coming-soon-inner {
+    padding: 1.5rem 1rem;
+    gap: 1rem;
+  }
+
+  .coming-soon-heading {
+    font-size: clamp(1.4rem, 6vw, 2.2rem);
+  }
+
+  .coming-soon-subtitle {
+    font-size: 0.8rem;
+  }
+}

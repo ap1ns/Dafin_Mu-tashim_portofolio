@@ -1,14 +1,14 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCards, Mousewheel, Keyboard, Autoplay } from 'swiper/modules';
+import { useLanguage } from '../context/LanguageContext';
 import 'swiper/css';
 import 'swiper/css/effect-cards';
 
 interface CardItem {
   id: string;
-  title: string;
-  subtitle: string;
-  description: string;
+  titleKey: string;
+  descKey: string;
   accent: string;
   imageUrl: string;
 }
@@ -16,79 +16,64 @@ interface CardItem {
 const INITIAL_CARDS: CardItem[] = [
   {
     id: 'card-1',
-    title: 'High Precision & Accuracy',
-    subtitle: 'VALUE',
-    description:
-      'Possessing exceptional attention to detail in recording daily sales transactions and managing inventory to ensure zero discrepancies.',
+    titleKey: 'cardTitle_1',
+    descKey: 'cardDesc_1',
     accent: 'from-cyan-500/50 to-violet-500/35',
-    imageUrl: 'https://i.pinimg.com/1200x/5c/a8/0e/5ca80ea69eaaea75d596c4ed84489aa4.jpg',
+    imageUrl: 'https://i.pinimg.com/1200x/5d/2f/72/5d2f72c1c69948d142231e3067d8f7a7.jpg',
   },
   {
     id: 'card-2',
-    title: 'Disciplined & Reliable',
-    subtitle: 'VALUE',
-    description:
-      'A highly disciplined professional committed to following Standard Operating Procedures (SOP) and meeting distribution targets consistently.',
+    titleKey: 'cardTitle_2',
+    descKey: 'cardDesc_2',
     accent: 'from-cyan-500/45 to-violet-500/30',
-    imageUrl: 'https://i.pinimg.com/736x/43/5d/25/435d25240e0a8cee30fc6e47d5fa69bc.jpg',
+    imageUrl: 'https://i.pinimg.com/1200x/20/49/22/204922ea29920ee9e10922c0300a5ef8.jpg',
   },
   {
     id: 'card-3',
-    title: 'Effective Collaborator',
-    subtitle: 'VALUE',
-    description:
-      'Proven ability to work harmoniously within a team, as demonstrated through professional experience and active participation in competitive sports.',
+    titleKey: 'cardTitle_3',
+    descKey: 'cardDesc_3',
     accent: 'from-cyan-500/40 to-violet-500/25',
-    imageUrl: 'https://i.pinimg.com/1200x/23/57/4f/23574fc3d18a9bc4b8f59905a61c5635.jpg',
+    imageUrl: 'https://i.pinimg.com/1200x/51/05/8d/51058db60af863dc9dd4987e67d0d42f.jpg',
   },
   {
     id: 'card-4',
-    title: 'Adaptive & Quick Learner',
-    subtitle: 'VALUE',
-    description:
-      'Rapidly adapts to new work environments, technical systems, and operational workflows, ensuring a short learning curve.',
+    titleKey: 'cardTitle_4',
+    descKey: 'cardDesc_4',
     accent: 'from-cyan-500/35 to-violet-500/20',
-    imageUrl: 'https://i.pinimg.com/736x/c2/95/c3/c295c37e1f1232929e584a30301b15d8.jpg',
+    imageUrl: 'https://i.pinimg.com/1200x/ce/4f/eb/ce4febd00c098b9f18ad91f6e330731a.jpg',
   },
   {
     id: 'card-5',
-    title: 'Inventory Control Expert',
-    subtitle: 'VALUE',
-    description:
-      'Experienced in managing stock flow, including accurate picking, packing, and verifying goods to maintain high customer satisfaction.',
+    titleKey: 'cardTitle_5',
+    descKey: 'cardDesc_5',
     accent: 'from-cyan-500/30 to-violet-500/15',
-    imageUrl: 'https://i.pinimg.com/736x/79/39/75/7939757da0fc7c990800bdb55ae61cdc.jpg',
+    imageUrl: 'https://i.pinimg.com/1200x/5c/a6/ef/5ca6ef600d5fbaa135762df503f4d3d0.jpg',
   },
   {
     id: 'card-6',
-    title: 'Tech-Savvy Operations',
-    subtitle: 'VALUE',
-    description:
-      'Leveraging a Computer and Network Engineering background to master administrative software and digital tools for efficient management.',
+    titleKey: 'cardTitle_6',
+    descKey: 'cardDesc_6',
     accent: 'from-cyan-500/20 to-violet-500/10',
-    imageUrl: 'https://i.pinimg.com/1200x/95/d4/64/95d464f7a077f117442e4c9c62653238.jpg',
+    imageUrl: 'https://i.pinimg.com/1200x/b4/29/2c/b4292ce18b5a4f9c48998a09f67d9f7a.jpg',
   },
   {
     id: 'card-7',
-    title: 'Systematic Reporting',
-    subtitle: 'VALUE',
-    description:
-      'Skilled in collecting data and transforming it into systematic, professional reports that support effective decision-making processes.',
+    titleKey: 'cardTitle_7',
+    descKey: 'cardDesc_7',
     accent: 'from-cyan-500/15 to-violet-500/5',
-    imageUrl: 'https://i.pinimg.com/736x/5d/aa/cc/5daaccf8af554418fb95b798bd89a9af.jpg',
+    imageUrl: 'https://i.pinimg.com/736x/fe/c0/8a/fec08a27ae224034d07ce86fb1741713.jpg',
   },
   {
     id: 'card-8',
-    title: 'Efficient Time Management',
-    subtitle: 'VALUE',
-    description:
-      'Able to manage high-volume tasks under tight deadlines while maintaining quality and speed in both administrative and field operations.',
+    titleKey: 'cardTitle_8',
+    descKey: 'cardDesc_8',
     accent: 'from-cyan-500/10 to-violet-500/0',
-    imageUrl: 'https://i.pinimg.com/736x/1f/bd/5c/1fbd5c84ef416e5073c9a95adbfc94ed.jpg',
+    imageUrl: 'https://i.pinimg.com/736x/85/07/87/85078789fb19dbbacc835d92db3e16cd.jpg',
   },
 ];
 
 const StackingCardSwipe: React.FC = () => {
+  const { t } = useLanguage();
   return (
     <div className="mx-auto flex w-full max-w-[420px] justify-center px-4 py-6 sm:max-w-[440px] md:max-w-[460px] lg:max-w-[500px] xl:max-w-[520px]">
       <div className="relative w-full">
@@ -155,7 +140,7 @@ const StackingCardSwipe: React.FC = () => {
                 <div className="relative h-[380px] w-full rounded-[2.5rem] border border-white/10 bg-zinc-950/80 shadow-[0_20px_48px_rgba(0,0,0,0.24)] backdrop-blur-2xl overflow-hidden sm:h-[400px] md:h-[420px] lg:h-[440px]">
                   <img
                     src={card.imageUrl}
-                    alt={card.title}
+                    alt={t(card.titleKey as any)}
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                   <div className="absolute inset-0 bg-black/30" />
@@ -163,13 +148,13 @@ const StackingCardSwipe: React.FC = () => {
                   <div className="relative h-full flex flex-col justify-end p-6 text-white sm:p-8">
                     <div className="space-y-3">
                       <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.35em] text-zinc-200 sm:text-[11px]">
-                        <span className="font-semibold">{card.title}</span>
+                        <span className="font-semibold">{t(card.titleKey as any)}</span>
                         <span className="rounded-full border border-white/15 bg-white/5 px-2 py-1">
-                          {card.subtitle}
+                          {t('cardSubtitle')}
                         </span>
                       </div>
                       <p className="text-sm leading-6 text-zinc-100 sm:text-base sm:leading-7">
-                        {card.description}
+                        {t(card.descKey as any)}
                       </p>
                     </div>
                   </div>

@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import InteractiveStoryBlock from '../components/InteractiveStoryBlock';
@@ -9,6 +10,7 @@ import PageBackground from '../components/PageBackground';
 import { PAGE_BACKGROUNDS } from '../config/pageBackgrounds';
 
 const Experience: React.FC = () => {
+  const { t } = useLanguage();
   const { isDark } = useTheme();
   const { opacity } = useScrollVisibility();
   const backgroundUrl = isDark
@@ -146,17 +148,16 @@ const Experience: React.FC = () => {
               <Sparkles size={20} className="text-white" />
             </motion.div>
             <span className="text-xs font-bold tracking-[0.3em] text-white/50 uppercase">
-              Professional jorney
+              {t('profJourney')}
             </span>
           </div>
 
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-grotesk font-bold leading-[0.95] text-white mb-6">
-            WORK EXPERIENCE
+            {t('experienceTitle')}
           </h1>
 
           <p className="text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed font-light">
-            A diverse journey blending creative vision with analytical rigor. Each experience shaped
-            my approach to solving complex problems and delivering measurable impact.
+            {t('expDesc')}
           </p>
         </motion.div>
 
@@ -190,7 +191,7 @@ const Experience: React.FC = () => {
             transition={{ delay: 0.3 }}
           >
             <p className="text-white/50 text-sm font-light">
-              Click on any experience to explore details
+              {t('exploreDetails')}
             </p>
           </motion.div>
         )}
@@ -220,7 +221,7 @@ const Experience: React.FC = () => {
                 viewport={{ once: false }}
                 transition={{ duration: 0.6 }}
               >
-                Let's Create Something Remarkable
+                {t('letsCreateRemarkable')}
               </motion.h2>
 
               <motion.p
@@ -230,9 +231,7 @@ const Experience: React.FC = () => {
                 viewport={{ once: false }}
                 transition={{ duration: 0.6, delay: 0.1 }}
               >
-                Whether you are looking for organized inventory management, precise data
-                administration, or efficient warehouse support—I am ready to help streamline your
-                business processes.
+                {t('expCollabMsg')}
               </motion.p>
 
               <motion.a
@@ -252,7 +251,7 @@ const Experience: React.FC = () => {
                   whileHover={{ x: 4 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <span>Get In Touch</span>
+                  <span>{t('getInTouchBtn')}</span>
                   <motion.div
                     animate={{ x: [0, 3, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}

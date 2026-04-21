@@ -1,59 +1,20 @@
 import React, { useMemo, useRef, useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-import { useScrollVisibility } from '../hooks/useScrollAnimation';
-import Projects from '../link-project/Projects';
 import PageBackground from '../components/PageBackground';
 import StackingCardSwipe from '../components/StackingCardSwipe';
+import ComingSoonDisplay from '../components/ComingSoonDisplay';
 import { PAGE_BACKGROUNDS } from '../config/pageBackgrounds';
 import { SKILLS_DATA } from '../data';
+import '../styles/coming-soon.css';
 
-const FloatingStars: React.FC = () => {
-  const stars = React.useMemo(
-    () =>
-      Array.from({ length: 20 }, (_, index) => ({
-        id: index,
-        left: Math.random() * 100,
-        size: Math.random() * 3 + 2,
-        duration: Math.random() * 4 + 6,
-        delay: Math.random() * 3,
-        opacity: Math.random() * 0.45 + 0.55,
-        hue: Math.random() * 60 + 190,
-      })),
-    []
-  );
 
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-      {stars.map((star) => (
-        <motion.div
-          key={star.id}
-          className="absolute rounded-full"
-          style={{
-            left: `${star.left}%`,
-            width: `${star.size}px`,
-            height: `${star.size}px`,
-            backgroundColor: `hsla(${star.hue}, 100%, 90%, ${star.opacity})`,
-            boxShadow: `0 0 ${star.size * 3}px rgba(255,255,255,${star.opacity})`,
-          }}
-          initial={{ y: '-5vh', opacity: 1 }}
-          animate={{ y: ['-5vh', '110vh'], opacity: [1, 1, 0] }}
-          transition={{
-            duration: star.duration,
-            repeat: Infinity,
-            ease: 'linear',
-            delay: star.delay,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
 
 const Skills: React.FC = () => {
+  const { t } = useLanguage();
   const { isDark } = useTheme();
-  const { opacity } = useScrollVisibility();
   const backgroundUrl = isDark ? PAGE_BACKGROUNDS.skills.dark : PAGE_BACKGROUNDS.skills.light;
   const containerRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<HTMLDivElement | null>(null);
@@ -96,13 +57,13 @@ const Skills: React.FC = () => {
           <div>
             <div className="flex items-center gap-3 mb-4 md:mb-5 text-zinc-500">
               <Terminal size={14} className="md:size-16" />
-              <span className="text-[9px] md:text-[10px] font-black tracking-[0.5em] uppercase">Tech Stack v2.0</span>
+              <span className="text-[9px] md:text-[10px] font-black tracking-[0.5em] uppercase">{t('techStackV2')}</span>
             </div>
             <h2 className="text-5xl sm:text-7xl md:text-8xl font-display leading-[0.85] mb-4 md:mb-5 tracking-tighter uppercase text-white">
-              CORE COMPETENCIES
+              {t('coreCompetencies')}
             </h2>
             <p className="text-zinc-400 text-base leading-relaxed max-w-2xl">
-              This section showcases my technical proficiency in administrative tools and data management. Drawing from my background in Computer and Network Engineering, I apply a systematic approach to organizing information, managing inventory, and ensuring operational efficiency. These projects reflect my commitment to accuracy, workflow optimization, and professional documentation.
+              {t('skillsCoreDesc')}
             </p>
 
             {/* Skills Filter Tabs */}
@@ -168,8 +129,13 @@ const Skills: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Projects Component */}
-        {/* <Projects showHeader={false} activeSkillId={activeSkillId} onSkillChange={setActiveSkillId} /> */}
+        {/* Coming Soon Display — appears when a skill icon is clicked */}
+        {activeSkillId && (
+          <ComingSoonDisplay
+            activeSkillId={activeSkillId}
+            skillName={SKILLS_DATA.find((s) => s.id === activeSkillId)?.name || ''}
+          />
+        )}
 
         {/* Cards for smaller screens - below Projects */}
         <motion.div

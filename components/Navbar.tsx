@@ -4,6 +4,7 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import { Menu, X, Music } from 'lucide-react';
 import { useModal } from '../context/ModalContext';
 import { useAudio } from '../context/AudioContext';
+import { useLanguage } from '../context/LanguageContext';
 
 interface NavbarProps {
   onOpenPlaylist?: () => void;
@@ -16,6 +17,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenPlaylist }) => {
   const { pathname, hash } = useLocation();
   const navigate = useNavigate();
   const { isModalOpen } = useModal();
+  const { t } = useLanguage();
 
   const { openPlaylist } = useAudio();
 
@@ -49,11 +51,11 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenPlaylist }) => {
   const isHome = pathname === '/';
 
   const navItems = [
-    { label: 'HOME', href: '/#home' },
-    { label: 'ABOUT', href: '/#about' },
-    { label: 'EXPERIENCE', href: '/#experience' },
-    { label: 'SKILLS', href: '/#skills' },
-    { label: 'CONTACT', href: '/#contact' },
+    { label: t('home'), href: '/#home' },
+    { label: t('about'), href: '/#about' },
+    { label: t('experience'), href: '/#experience' },
+    { label: t('skills'), href: '/#skills' },
+    { label: t('contact'), href: '/#contact' },
   ];
 
   useEffect(() => {
@@ -163,7 +165,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenPlaylist }) => {
             onClick={(e) => handleNavClick(e, '/#contact')}
             className="px-4 md:px-5 py-2 md:py-2.5 bg-white text-black rounded-xl text-[9px] md:text-[10px] font-black tracking-[0.2em] hover:bg-zinc-200 transition-colors whitespace-nowrap"
           >
-            HIRE
+            {t('hire')}
           </Link>
 
           <button
@@ -244,7 +246,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenPlaylist }) => {
               }}
               className="px-4 py-3 bg-white text-black rounded-lg text-sm font-black tracking-[0.15em] hover:bg-zinc-200 transition-colors text-center"
             >
-              HIRE
+              {t('hire')}
             </Link>
             <button
               type="button"

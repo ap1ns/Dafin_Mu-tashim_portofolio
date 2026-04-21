@@ -168,65 +168,6 @@ export const SKILLS_DATA: Skill[] = [
       },
     ],
   },
-  // {
-  //   id: 'canva',
-  //   name: 'Canva',
-  //   icon: '<i class="fi fi-sr-palette"></i>',
-  //   color: 'bg-cyan-100',
-  //   projects: [
-  //     {
-  //       id: 'p5',
-  //       title: 'Social Media Branding',
-  //       description: 'Full identity kit including Instagram stories, posts, and LinkedIn banners.',
-  //       tools: ['Canva Design', 'Brand Kit'],
-  //       imageUrl: 'https://picsum.photos/seed/canva1/800/450',
-  //       logo: '<i class="fi fi-sr-arrow-circle-right text-black dark:text-white hover:text-white dark:hover:text-black"></i>',
-  //       link: ''
-  //     }
-  //   ]
-  // },
-  // {
-  //   id: 'capcut',
-  //   name: 'video editing',
-  //   icon: '<i class="fi fi-sr-video-camera"></i>',
-  //   imageUrl: '/img/capcut.png', // User will add their own image
-  //   color: 'bg-zinc-200',
-  //   projects: [
-  //     // {
-  //     //   id: 'p6',
-  //     //   title: 'Short-Form Video Series',
-  //     //   description: 'Dynamic TikTok/Reels editing with synchronized audio and motion text.',
-  //     //   tools: ['CapCut Editing', 'Mobile Video'],
-  //     //   imageUrl: 'https://picsum.photos/seed/video1/600/1000',
-  //     //   videoUrl: '',
-  //     //   aspectRatio: '16:9',
-  //     //   logo: '<i class="fi fi-sr-arrow-circle-right text-black dark:text-white hover:text-white dark:hover:text-black"></i>',
-  //     //   link: ''
-  //     // },
-  //     {
-  //       id: 'p6b',
-  //       title: 'YouTube Tutorial Edit',
-  //       description: 'Engaging YouTube tutorial with smooth transitions and B-roll footage.',
-  //       tools: ['CapCut', 'Adobe Premiere', 'Audio Design'],
-  //       imageUrl: 'https://picsum.photos/seed/video2/1280/720',
-  //       videoUrl: '',
-  //       aspectRatio: '16:9',
-  //       logo: '<i class="fi fi-sr-arrow-circle-right text-black dark:text-white hover:text-white dark:hover:text-black"></i>',
-  //       link: ''
-  //     },
-  //     {
-  //       id: 'p6c',
-  //       title: 'Event Cinematic Video',
-  //       description: 'Professional event recording with cinematic color grading and effects.',
-  //       tools: ['CapCut', 'DaVinci Resolve', 'Camera Techniques'],
-  //       imageUrl: 'https://picsum.photos/seed/video3/1280/720',
-  //       videoUrl: '/img/bg013.mp4',
-  //       aspectRatio: '16:9',
-  //       logo: '<i class="fi fi-sr-arrow-circle-right text-black dark:text-white hover:text-white dark:hover:text-black"></i>',
-  //       link: ''
-  //     }
-  //   ]
-  // },
   {
     id: 'python',
     name: 'Python',
@@ -238,21 +179,6 @@ export const SKILLS_DATA: Skill[] = [
 ];
 
 export const EXPERIENCE_DATA: Experience[] = [
-  // {
-  //   id: 'exp2',
-  //   title: 'YouTube Content Editor',
-  //   company: 'Tuan Veles',
-  //   period: '2025 - Present',
-  //   description: 'Edited educational YouTube content, focusing on video editing and thumbnail creation to support content delivery and audience engagement.',
-  //   highlights: [
-  //     'Edited educational video content for YouTube',
-  //     'Designed and created YouTube thumbnails',
-  //     'Collaborated on project-based content production',
-  //     'Ensured video quality, pacing, and visual clarity'
-  //   ],
-  //   skills: ['Video Editing','YouTube Thumbnail Design','Content Editing','CapCut','Adobe Photoshop','Canva'],
-  //   type: 'project'
-  // },
   {
     id: 'exp3',
     title: 'Administrative Data Entry',
@@ -292,19 +218,4 @@ export const EXPERIENCE_DATA: Experience[] = [
     ],
     type: 'internship',
   },
-  // {
-  //   id: 'exp4',
-  //   title: 'Culinary Consultant',
-  //   company: 'F&B Establishment',
-  //   period: '2019 - 2021',
-  //   description: 'Collaborated on menu development and food styling projects, bringing creative vision to culinary presentation.',
-  //   highlights: [
-  //     'Designed 20+ innovative menu items that became signature offerings at the restaurant',
-  //     'Directed food photography sessions resulting in 150+ high-quality images for marketing',
-  //     'Improved operational efficiency by 30% through process optimization and staff training',
-  //     'Enhanced brand image through creative presentation and consistent quality standards'
-  //   ],
-  //   skills: ['Menu Development', 'Food Styling', 'Photography', 'Creative Direction', 'Process Optimization'],
-  //   type: 'full-time'
-  // }
 ];

@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useEasterEgg } from '../context/EasterEggContext';
+import { useLanguage } from '../context/LanguageContext';
 
 const Footer: React.FC = () => {
   const { triggerEasterEgg } = useEasterEgg();
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   const containerVariants = {
@@ -73,12 +75,7 @@ const Footer: React.FC = () => {
               viewport={{ once: false }}
               transition={{ delay: 0.2 }}
             >
-              Dafin Mu'tashim (
-              <span onClick={triggerEasterEgg} className="cursor-default inline">
-                Apin
-              </span>
-              ) is a detail-oriented operations professional focused on efficient logistics
-              management and accurate data administration.
+              <span dangerouslySetInnerHTML={{ __html: t('footerDescription').replace('Apin', `<span class="cursor-default">${'Apin'}</span>`) }} onClick={triggerEasterEgg} />
             </motion.p>
           </motion.div>
           <motion.div variants={itemVariants} transition={{ duration: 0.6, ease: 'easeOut' }}>
@@ -89,7 +86,7 @@ const Footer: React.FC = () => {
               viewport={{ once: false }}
               transition={{ delay: 0.1 }}
             >
-              Quick Links
+              {t('quickLinks')}
             </motion.h4>
             <motion.ul
               className="space-y-4 text-zinc-500 dark:text-zinc-400 text-sm font-medium"
@@ -99,11 +96,11 @@ const Footer: React.FC = () => {
               viewport={{ once: false }}
             >
               {[
-                { href: '#home', label: 'Home' },
-                { href: '#about', label: 'About' },
-                { href: '#experience', label: 'Experience' },
-                { href: '#skills', label: 'Skills' },
-                { href: '#contact', label: 'Contact' },
+                { href: '#home', label: t('home') },
+                { href: '#about', label: t('about') },
+                { href: '#experience', label: t('experience') },
+                { href: '#skills', label: t('skills') },
+                { href: '#contact', label: t('contact') },
               ].map((link) => (
                 <motion.li key={link.href} variants={linkVariants}>
                   <motion.a
@@ -125,7 +122,7 @@ const Footer: React.FC = () => {
               viewport={{ once: false }}
               transition={{ delay: 0.1 }}
             >
-              Follow Me
+              {t('followMe')}
             </motion.h4>
             <motion.ul
               className="space-y-4 text-zinc-500 dark:text-zinc-400 text-sm font-medium"
@@ -182,7 +179,7 @@ const Footer: React.FC = () => {
                 </motion.span>
               ))}
             </span>
-            . ALL RIGHTS RESERVED
+            . {t('allRightsReserved').toUpperCase()}
           </motion.p>
           <motion.div
             className="flex gap-8"
@@ -197,7 +194,7 @@ const Footer: React.FC = () => {
               variants={linkVariants}
               whileHover={{ scale: 1.05 }}
             >
-              Privacy Policy
+              {t('privacyPolicy')}
             </motion.a>
             <motion.a
               href="#"
@@ -205,7 +202,7 @@ const Footer: React.FC = () => {
               variants={linkVariants}
               whileHover={{ scale: 1.05 }}
             >
-              Terms of Service
+              {t('termsOfService')}
             </motion.a>
           </motion.div>
         </motion.div>

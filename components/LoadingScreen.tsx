@@ -14,6 +14,7 @@ import {
   OPACITY,
   ANIMATION_SPEED,
 } from '../constants/loadingScreenConstants';
+import { useLanguage } from '../context/LanguageContext';
 
 interface LoadingScreenProps {
   duration?: number;
@@ -47,6 +48,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
   const [progress, setProgress] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
+  const { setLanguage } = useLanguage();
 
   useEffect(() => {
     if (!isLoading) {
@@ -244,15 +246,46 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
                   className="mt-6 flex flex-col gap-3 justify-center items-center"
                 >
                   {!showOptions ? (
-                    <motion.button
-                      type="button"
-                      onClick={(onStartWithoutMusic)}
-                      whileTap={{ scale: HOVER.BUTTON_SCALE }}
-                      whileHover={{ scale: HOVER.ICON_SCALE }}
-                      className="px-6 py-3 rounded-full bg-black text-white dark:bg-white dark:text-black text-xs md:text-sm font-semibold tracking-wide uppercase shadow-lg hover:shadow-xl transition-all duration-300"
+                    <motion.div
+                      className="relative group cursor-pointer"
+                      onClick={() => setShowOptions(true)}
                     >
-                      Open to Start
-                    </motion.button>
+
+                      
+                      {/* Button Container */}
+                      <motion.button
+                        type="button"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="relative px-8 py-3.5 bg-black dark:bg-white text-white dark:text-black rounded-full text-xs md:text-sm font-bold tracking-[0.2em] uppercase overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.3)] dark:shadow-[0_0_40px_rgba(255,255,255,0.3)] border border-white/10 dark:border-black/10 transition-all duration-300 group-hover:shadow-[0_0_60px_rgba(0,0,0,0.5)] dark:group-hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]"
+                      >
+                        {/* Shimmer line */}
+                        <motion.div
+                          className="absolute top-0 left-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/30 dark:via-black/30 to-transparent -skew-x-12"
+                          animate={{
+                            x: ['-150%', '150%'],
+                          }}
+                          transition={{
+                            duration: 2.5,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            repeatDelay: 0.5,
+                          }}
+                        />
+                        <span className="relative z-10 flex items-center gap-3">
+                          Open to Start
+                          <motion.div
+                            animate={{ x: [0, 5, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                          >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M5 12h14"></path>
+                              <path d="m12 5 7 7-7 7"></path>
+                            </svg>
+                          </motion.div>
+                        </span>
+                      </motion.button>
+                    </motion.div>
                   ) : (
                     <motion.div
                       initial={{ opacity: 0, scale: 0.8 }}
@@ -267,82 +300,64 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
                         transition={{ delay: 0.2 }}
                         className="text-xs md:text-sm text-black/70 dark:text-white/70 font-light tracking-wide uppercase"
                       >
-                        Choose your preference:
+                        Select your language:
                       </motion.p>
 
-                      {/* Icons Container */}
-                      <div className="flex gap-3 justify-center items-end">
-                        {/* With Music Icon */}
-                        {onStart && (
-                          <motion.div
-                            className="flex flex-col items-center gap-0 cursor-pointer"
-                            onClick={onStart}
-                            onHoverStart={() => setHoveredIcon('withMusic')}
-                            onHoverEnd={() => setHoveredIcon(null)}
-                            whileHover={{ y: HOVER.Y_OFFSET }}
-                            whileTap={{ scale: HOVER.SCALE_DOWN }}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3 }}
-                          >
-                            <motion.div
-                              className="h-[130px] flex items-end justify-center"
-                              whileHover={{ scale: HOVER.SCALE_UP }}
-                            >
-                              <img
-                                src="icons/music.png"
-                                alt="With Music"
-                                className="grayscale hover:grayscale-0 transition duration-300 w-[130px] h-[130px] object-contain block"
-                                style={{ transform: `translateY(${IMAGE_OFFSETS.WITH_MUSIC_Y}px)` }}
-                              />
-                            </motion.div>
-                            <motion.div
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: hoveredIcon === 'withMusic' ? 1 : 0 }}
-                              transition={{ duration: 0.2 }}
-                              className="-mt-8 text-xs  leading-none font-semibold text-black dark:text-white text-center"
-                            >
-                              With Music
-                            </motion.div>
-                          </motion.div>
-                        )}
+                      {/* Language Selection Container */}
+                      <div className="flex gap-6 justify-center items-center mt-4">
+                        {/* English Option */}
+                        <motion.button
+                          type="button"
+                          onClick={() => {
+                            setLanguage('en');
+                            if (onStartWithoutMusic) onStartWithoutMusic();
+                          }}
+                          onHoverStart={() => setHoveredIcon('en')}
+                          onHoverEnd={() => setHoveredIcon(null)}
+                          whileHover={{ scale: 1.15, y: -4 }}
+                          whileTap={{ scale: 0.9 }}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.3 }}
+                          className="relative w-16 h-16 rounded-full flex items-center justify-center shadow-lg group"
+                        >
+                          {/* Simple Hover Color Background with Liquid Fill Animation */}
+                          <div className="absolute inset-0 rounded-full bg-zinc-800 dark:bg-zinc-100 overflow-hidden">
+                            <div className="absolute inset-0 bg-indigo-900/80 dark:bg-indigo-200/80 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out rounded-full" />
+                          </div>
 
-                        {/* Without Music Icon */}
-                        {onStartWithoutMusic && (
-                          <motion.div
-                            className="flex flex-col items-center gap-[8] cursor-pointer"
-                            onClick={onStartWithoutMusic}
-                            onHoverStart={() => setHoveredIcon('withoutMusic')}
-                            onHoverEnd={() => setHoveredIcon(null)}
-                            whileHover={{ y: HOVER.Y_OFFSET }}
-                            whileTap={{ scale: HOVER.SCALE_DOWN }}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4 }}
-                          >
-                            <motion.div
-                              className="h-[130px] flex items-end justify-center"
-                              whileHover={{ scale: HOVER.SCALE_UP }}
-                            >
-                              <img
-                                src="icons/nomusic.png"
-                                alt="Without Music"
-                                className="grayscale hover:grayscale-0 transition duration-300 w-[110px] h-[110px] object-contain block"
-                                style={{
-                                  transform: `translateY(${IMAGE_OFFSETS.WITHOUT_MUSIC_Y}px)`,
-                                }}
-                              />
-                            </motion.div>
-                            <motion.div
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: hoveredIcon === 'withoutMusic' ? 1 : 0 }}
-                              transition={{ duration: 0.2 }}
-                              className="-mt-8 text-xs  leading-none font-semibold text-black dark:text-white text-center"
-                            >
-                              Without Music
-                            </motion.div>
-                          </motion.div>
-                        )}
+                          {/* Icon Text */}
+                          <span className="relative z-10 text-white dark:text-black font-black text-xl tracking-wider">
+                            EN
+                          </span>
+                        </motion.button>
+
+                        {/* Indonesian Option */}
+                        <motion.button
+                          type="button"
+                          onClick={() => {
+                            setLanguage('id');
+                            if (onStartWithoutMusic) onStartWithoutMusic();
+                          }}
+                          onHoverStart={() => setHoveredIcon('id')}
+                          onHoverEnd={() => setHoveredIcon(null)}
+                          whileHover={{ scale: 1.15, y: -4 }}
+                          whileTap={{ scale: 0.9 }}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.4 }}
+                          className="relative w-16 h-16 rounded-full flex items-center justify-center shadow-lg group"
+                        >
+                          {/* Simple Hover Color Background with Liquid Fill Animation */}
+                          <div className="absolute inset-0 rounded-full bg-zinc-800 dark:bg-zinc-100 overflow-hidden">
+                            <div className="absolute inset-0 bg-rose-900/80 dark:bg-rose-200/80 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out rounded-full" />
+                          </div>
+
+                          {/* Icon Text */}
+                          <span className="relative z-10 text-white dark:text-black font-black text-xl tracking-wider">
+                            ID
+                          </span>
+                        </motion.button>
                       </div>
                     </motion.div>
                   )}

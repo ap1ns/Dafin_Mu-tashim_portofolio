@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Experience } from '../types';
 import { Calendar, Briefcase, ChevronDown, Building2, CheckCircle } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface InteractiveStoryBlockProps {
   experience: Experience;
@@ -17,7 +18,17 @@ const InteractiveStoryBlock: React.FC<InteractiveStoryBlockProps> = ({
   onFocus,
   index,
 }) => {
+  const { t } = useLanguage();
   const [isHovered, setIsHovered] = useState(false);
+
+  // Translate experience fields using translation keys based on experience id
+  const translatedTitle = t(`expTitle_${experience.id}` as any) || experience.title;
+  const translatedCompany = t(`expCompany_${experience.id}` as any) || experience.company;
+  const translatedPeriod = t(`expPeriod_${experience.id}` as any) || experience.period;
+  const translatedDescription = t(`expDesc_${experience.id}` as any) || experience.description;
+  const translatedHighlights = experience.highlights?.map((_, idx) => 
+    t(`expHighlight_${experience.id}_${idx}` as any) || experience.highlights[idx]
+  );
 
   const getThemeColor = (type: string) => {
     const themes = {
@@ -93,16 +104,16 @@ const InteractiveStoryBlock: React.FC<InteractiveStoryBlockProps> = ({
           {/* Title & Company */}
           <div className="flex-1">
             <motion.h3 layout className="text-xl md:text-3xl font-bold text-black dark:text-white mb-2 tracking-tight">
-              {experience.title}
+              {translatedTitle}
             </motion.h3>
             <motion.div layout className="flex flex-wrap items-center gap-3 md:gap-4 text-sm font-medium text-black/60 dark:text-white/60">
               <span className="flex items-center gap-1.5 text-black/80 dark:text-white/80 font-bold px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 shadow-sm">
                 <Building2 size={14} />
-                {experience.company}
+                {translatedCompany}
               </span>
               <span className="flex items-center gap-1.5 font-semibold">
                 <Calendar size={14} className={theme.text} />
-                {experience.period}
+                {translatedPeriod}
               </span>
             </motion.div>
           </div>
@@ -126,7 +137,7 @@ const InteractiveStoryBlock: React.FC<InteractiveStoryBlockProps> = ({
               className="mt-4 md:pl-[5.5rem]"
             >
               <p className="text-sm md:text-base text-black/70 dark:text-white/70 line-clamp-2 leading-relaxed">
-                {experience.description}
+                {translatedDescription}
               </p>
             </motion.div>
           )}
@@ -149,10 +160,10 @@ const InteractiveStoryBlock: React.FC<InteractiveStoryBlockProps> = ({
                     <div>
                       <h4 className="flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-black/50 dark:text-white/50 mb-4">
                         <span className={`w-2 h-2 rounded-full ${theme.bg} border ${theme.border}`} />
-                        Overview
+                        {t('overview')}
                       </h4>
                       <p className="text-base text-black/80 dark:text-white/90 leading-relaxed font-medium">
-                        {experience.description}
+                        {translatedDescription}
                       </p>
                     </div>
 
@@ -160,10 +171,10 @@ const InteractiveStoryBlock: React.FC<InteractiveStoryBlockProps> = ({
                       <div>
                         <h4 className="flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-black/50 dark:text-white/50 mb-5">
                           <span className={`w-2 h-2 rounded-full ${theme.bg} border ${theme.border}`} />
-                          Key Impact
+                          {t('keyImpact')}
                         </h4>
                         <div className="space-y-4">
-                          {experience.highlights.map((highlight, idx) => (
+                          {translatedHighlights?.map((highlight, idx) => (
                             <motion.div
                               key={idx}
                               initial={{ opacity: 0, x: -20 }}
@@ -187,7 +198,7 @@ const InteractiveStoryBlock: React.FC<InteractiveStoryBlockProps> = ({
                     <div>
                       <h4 className="flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-black/50 dark:text-white/50 mb-5">
                         <span className={`w-2 h-2 rounded-full ${theme.bg} border ${theme.border}`} />
-                        Technologies & Skills
+                        {t('technologiesSkills')}
                       </h4>
                       <div className="flex flex-wrap gap-2 md:gap-3">
                         {experience.skills.map((skill, idx) => (
