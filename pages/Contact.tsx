@@ -411,7 +411,7 @@ const Contact: React.FC = () => {
                   <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full blur-xl" />
                   <div className="absolute bottom-0 right-0 w-20 h-20 bg-white/10 rounded-full blur-xl" />
                   <div className="relative z-10 h-full flex flex-col">
-                    <div className="relative h-52 md:h-[360px] w-full overflow-hidden">
+                    <div className="relative h-[55vw] sm:h-[45vw] md:h-[360px] w-full overflow-hidden">
                       {backgroundUrl && (
                         backgroundUrl.toLowerCase().endsWith('.mp4') || backgroundUrl.toLowerCase().endsWith('.webm') ? (
                           <video
@@ -445,7 +445,7 @@ const Contact: React.FC = () => {
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: false }}
                           transition={{ delay: 0.2, duration: 0.8, type: 'spring', stiffness: 120 }}
-                          className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-semibold text-white leading-tight"
+                          className="text-3xl md:text-3xl lg:text-5xl font-semibold text-white leading-tight"
                         >
                           {t('contactCardText2')}
                         </motion.h2>
@@ -455,7 +455,7 @@ const Contact: React.FC = () => {
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: false }}
                           transition={{ delay: 0.35, duration: 0.7 }}
-                          className="max-w-xl text-xs sm:text-sm md:text-base text-white leading-relaxed"
+                          className="max-w-xl text-base md:text-base text-white leading-relaxed"
                         >
                           {t('contactCardText3')}
                         </motion.p>

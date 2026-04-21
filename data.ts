@@ -199,7 +199,7 @@ export const EXPERIENCE_DATA: Experience[] = [
     id: 'exp4',
     title: 'Data Collection',
     company: 'PT. Mitrabhakti Inti Perdana',
-    period: 'June 2023 - Dec 2023',
+    period: '2023',
     description:
       'Assisted in survey-based data collection and data processing activities, including field surveys and report preparation for management.',
     highlights: [

@@ -21,6 +21,6 @@ export const PAGE_BACKGROUNDS = {
   },
   contact: {
     light: '',
-    dark: 'https://i.pinimg.com/736x/f0/79/d2/f079d2c0b8fa3ca7c7ea47b12cfdf49e.jpg',
+    dark: 'https://i.pinimg.com/originals/06/b9/ca/06b9cadb9ceef7c7d95aba422ba82996.gif',
   },
 };

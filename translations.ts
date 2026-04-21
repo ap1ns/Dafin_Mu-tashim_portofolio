@@ -178,7 +178,7 @@ export const translations = {
 
     expTitle_exp4: "Data Collection",
     expCompany_exp4: "PT. Mitrabhakti Inti Perdana",
-    expPeriod_exp4: "June 2023 - Dec 2023",
+    expPeriod_exp4: "2023",
     expDesc_exp4: "Assisted in survey-based data collection and data processing activities, including field surveys and report preparation for management.",
     expHighlight_exp4_0: "Participated in field and out-of-town survey activities",
     expHighlight_exp4_1: "Collected, recorded, and organized survey data from multiple locations",
