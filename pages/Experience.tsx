@@ -11,7 +11,7 @@ import PageBackground from '../components/PageBackground';
 import { PAGE_BACKGROUNDS } from '../config/pageBackgrounds';
 
 const Experience: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { isDark } = useTheme();
   const { opacity } = useScrollVisibility();
   const backgroundUrl = isDark
@@ -153,7 +153,7 @@ const Experience: React.FC = () => {
             </span>
           </div>
 
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-grotesk font-bold leading-[0.95] text-white mb-6">
+          <h1 className={`font-grotesk font-bold leading-[0.95] text-white mb-6 ${language === 'id' ? 'text-4xl md:text-5xl lg:text-6xl' : 'text-6xl md:text-7xl lg:text-8xl'}`}>
             <SplitText
               text={t('experienceTitle')}
               splitBy="word"
