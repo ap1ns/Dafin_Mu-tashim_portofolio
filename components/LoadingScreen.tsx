@@ -39,7 +39,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
   duration = DEFAULT_LOADING_DURATION,
   onComplete,
   isLoading = true,
-  backgroundUrl = 'https://i.pinimg.com/originals/d0/62/a0/d062a054db706da542a505e96bd851b8.gif', // Default: empty string (use default bg)
+  backgroundUrl = 'https://i.pinimg.com/originals/48/67/79/48677982e0a309142bf2ebe21edb4486.gif',
   onStart,
   onStartWithoutMusic,
   hasStarted = false,
@@ -237,167 +237,237 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
                 Crafting digital experiences with code and creativity
               </motion.p>
 
-              {/* Start Button */}
-              {(onStart || onStartWithoutMusic) && !hasStarted && (
+              {/* Start Button - always rendered to preserve layout, hidden via opacity when started */}
+              {(onStart || onStartWithoutMusic) && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: START_BUTTON_DELAY, duration: 0.5 }}
-                  className="mt-6 flex flex-col gap-3 justify-center items-center"
+                  animate={{ opacity: hasStarted ? 0 : 1, y: 0 }}
+                  transition={{ delay: hasStarted ? 0 : START_BUTTON_DELAY, duration: 0.5 }}
+                  className="mt-6 flex flex-col gap-3 justify-center items-center min-h-[130px]"
+                  style={{ pointerEvents: hasStarted ? 'none' : 'auto' }}
                 >
-                  {!showOptions ? (
-                    <motion.div
-                      className="relative group cursor-pointer"
-                      onClick={() => setShowOptions(true)}
-                    >
-
-                      
-                      {/* Button Container */}
-                      <motion.button
-                        type="button"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="relative px-8 py-3.5 bg-black dark:bg-white text-white dark:text-black rounded-full text-xs md:text-sm font-bold tracking-[0.2em] uppercase overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.3)] dark:shadow-[0_0_40px_rgba(255,255,255,0.3)] border border-white/10 dark:border-black/10 transition-all duration-300 group-hover:shadow-[0_0_60px_rgba(0,0,0,0.5)] dark:group-hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]"
+                  <AnimatePresence mode="wait">
+                    {!showOptions ? (
+                      <motion.div
+                        key="start-button"
+                        className="relative group cursor-pointer"
+                        onClick={() => setShowOptions(true)}
+                        initial={{ opacity: 0, scale: 0.9, filter: 'blur(8px)' }}
+                        animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                        exit={{
+                          opacity: 0,
+                          scale: 0.6,
+                          filter: 'blur(12px)',
+                          y: -10,
+                          transition: {
+                            duration: 0.4,
+                            ease: [0.4, 0, 0.2, 1],
+                          },
+                        }}
                       >
-                        {/* Shimmer line */}
-                        <motion.div
-                          className="absolute top-0 left-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/30 dark:via-black/30 to-transparent -skew-x-12"
-                          animate={{
-                            x: ['-150%', '150%'],
-                          }}
-                          transition={{
-                            duration: 2.5,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            repeatDelay: 0.5,
-                          }}
-                        />
-                        <span className="relative z-10 flex items-center gap-3">
-                          Open to Start
+                        {/* Button Container */}
+                        <motion.button
+                          type="button"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="relative px-8 py-3.5 bg-black dark:bg-white text-white dark:text-black rounded-full text-xs md:text-sm font-bold tracking-[0.2em] uppercase overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.3)] dark:shadow-[0_0_40px_rgba(255,255,255,0.3)] border border-white/10 dark:border-black/10 transition-all duration-300 group-hover:shadow-[0_0_60px_rgba(0,0,0,0.5)] dark:group-hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]"
+                        >
+                          {/* Shimmer line */}
                           <motion.div
-                            animate={{ x: [0, 5, 0] }}
-                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                          >
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M5 12h14"></path>
-                              <path d="m12 5 7 7-7 7"></path>
-                            </svg>
-                          </motion.div>
-                        </span>
-                      </motion.button>
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className="flex flex-col gap-6 justify-center items-center"
-                    >
-                      {/* Instruction Text */}
-                      <motion.p
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="text-xs md:text-sm text-black/70 dark:text-white/70 font-light tracking-wide uppercase"
+                            className="absolute top-0 left-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/30 dark:via-black/30 to-transparent -skew-x-12"
+                            animate={{
+                              x: ['-150%', '150%'],
+                            }}
+                            transition={{
+                              duration: 2.5,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                              repeatDelay: 0.5,
+                            }}
+                          />
+                          <span className="relative z-10 flex items-center">
+                            Open to Start
+                            <motion.div
+                              animate={{ x: [0, 5, 0] }}
+                              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                            >
+                            </motion.div>
+                          </span>
+                        </motion.button>
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="language-selector"
+                        initial={{ opacity: 0, scale: 0.5, filter: 'blur(16px)', y: 15 }}
+                        animate={{
+                          opacity: 1,
+                          scale: 1,
+                          filter: 'blur(0px)',
+                          y: 0,
+                          transition: {
+                            duration: 0.5,
+                            ease: [0.16, 1, 0.3, 1],
+                            staggerChildren: 0.1,
+                            delayChildren: 0.15,
+                          },
+                        }}
+                        className="flex flex-col gap-6 justify-center items-center"
                       >
-                        Select your language:
-                      </motion.p>
-
-                      {/* Language Selection Container */}
-                      <div className="flex gap-6 justify-center items-center mt-4">
-                        {/* English Option */}
-                        <motion.button
-                          type="button"
-                          onClick={() => {
-                            setLanguage('en');
-                            if (onStartWithoutMusic) onStartWithoutMusic();
+                        {/* Instruction Text */}
+                        <motion.p
+                          initial={{ opacity: 0, y: -12, filter: 'blur(6px)' }}
+                          animate={{
+                            opacity: 1,
+                            y: 0,
+                            filter: 'blur(0px)',
+                            transition: { duration: 0.45, delay: 0.1, ease: [0.16, 1, 0.3, 1] },
                           }}
-                          onHoverStart={() => setHoveredIcon('en')}
-                          onHoverEnd={() => setHoveredIcon(null)}
-                          whileHover={{ scale: 1.15, y: -4 }}
-                          whileTap={{ scale: 0.9 }}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.3 }}
-                          className="relative w-16 h-16 rounded-full flex items-center justify-center shadow-lg group"
+                          className="text-xs md:text-sm text-black/70 dark:text-white/70 font-light tracking-wide uppercase"
                         >
-                          {/* Simple Hover Color Background with Liquid Fill Animation */}
-                          <div className="absolute inset-0 rounded-full bg-zinc-800 dark:bg-zinc-100 overflow-hidden">
-                            <div className="absolute inset-0 bg-indigo-900/80 dark:bg-indigo-200/80 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out rounded-full" />
-                          </div>
+                          Select your language:
+                        </motion.p>
 
-                          {/* Icon Text */}
-                          <span className="relative z-10 text-white dark:text-black font-black text-xl tracking-wider">
-                            EN
-                          </span>
-                        </motion.button>
-
-                        {/* Indonesian Option */}
-                        <motion.button
-                          type="button"
-                          onClick={() => {
-                            setLanguage('id');
-                            if (onStartWithoutMusic) onStartWithoutMusic();
+                        {/* Language Selection Container */}
+                        <motion.div
+                          className="flex gap-6 justify-center items-center mt-4"
+                          initial={{ opacity: 0 }}
+                          animate={{
+                            opacity: 1,
+                            transition: { duration: 0.3, delay: 0.2 },
                           }}
-                          onHoverStart={() => setHoveredIcon('id')}
-                          onHoverEnd={() => setHoveredIcon(null)}
-                          whileHover={{ scale: 1.15, y: -4 }}
-                          whileTap={{ scale: 0.9 }}
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.4 }}
-                          className="relative w-16 h-16 rounded-full flex items-center justify-center shadow-lg group"
                         >
-                          {/* Simple Hover Color Background with Liquid Fill Animation */}
-                          <div className="absolute inset-0 rounded-full bg-zinc-800 dark:bg-zinc-100 overflow-hidden">
-                            <div className="absolute inset-0 bg-rose-900/80 dark:bg-rose-200/80 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out rounded-full" />
-                          </div>
+                          {/* English Option */}
+                          <motion.button
+                            type="button"
+                            onClick={() => {
+                              setLanguage('en');
+                              if (onStartWithoutMusic) onStartWithoutMusic();
+                            }}
+                            onHoverStart={() => setHoveredIcon('en')}
+                            onHoverEnd={() => setHoveredIcon(null)}
+                            whileHover={{ scale: 1.15, y: -4 }}
+                            whileTap={{ scale: 0.9 }}
+                            initial={{ opacity: 0, x: -30, scale: 0.3, filter: 'blur(10px)' }}
+                            animate={{
+                              opacity: 1,
+                              x: 0,
+                              scale: 1,
+                              filter: 'blur(0px)',
+                              transition: {
+                                type: 'spring',
+                                stiffness: 300,
+                                damping: 22,
+                                delay: 0.25,
+                              },
+                            }}
+                            className="relative w-16 h-16 rounded-full flex items-center justify-center shadow-lg group"
+                          >
+                            {/* Simple Hover Color Background with Liquid Fill Animation */}
+                            <div className="absolute inset-0 rounded-full bg-zinc-800 dark:bg-zinc-100 overflow-hidden">
+                              <div className="absolute inset-0 bg-indigo-900/80 dark:bg-indigo-200/80 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out rounded-full" />
+                            </div>
 
-                          {/* Icon Text */}
-                          <span className="relative z-10 text-white dark:text-black font-black text-xl tracking-wider">
-                            ID
-                          </span>
-                        </motion.button>
-                      </div>
-                    </motion.div>
-                  )}
+                            {/* Icon Text */}
+                            <span className="relative z-10 text-white dark:text-black font-black text-xl tracking-wider">
+                              EN
+                            </span>
+                          </motion.button>
+
+                          {/* Divider dot */}
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{
+                              opacity: 0.3,
+                              scale: 1,
+                              transition: {
+                                type: 'spring',
+                                stiffness: 400,
+                                damping: 20,
+                                delay: 0.35,
+                              },
+                            }}
+                            className="w-1.5 h-1.5 rounded-full bg-black dark:bg-white"
+                          />
+
+                          {/* Indonesian Option */}
+                          <motion.button
+                            type="button"
+                            onClick={() => {
+                              setLanguage('id');
+                              if (onStartWithoutMusic) onStartWithoutMusic();
+                            }}
+                            onHoverStart={() => setHoveredIcon('id')}
+                            onHoverEnd={() => setHoveredIcon(null)}
+                            whileHover={{ scale: 1.15, y: -4 }}
+                            whileTap={{ scale: 0.9 }}
+                            initial={{ opacity: 0, x: 30, scale: 0.3, filter: 'blur(10px)' }}
+                            animate={{
+                              opacity: 1,
+                              x: 0,
+                              scale: 1,
+                              filter: 'blur(0px)',
+                              transition: {
+                                type: 'spring',
+                                stiffness: 300,
+                                damping: 22,
+                                delay: 0.35,
+                              },
+                            }}
+                            className="relative w-16 h-16 rounded-full flex items-center justify-center shadow-lg group"
+                          >
+                            {/* Simple Hover Color Background with Liquid Fill Animation */}
+                            <div className="absolute inset-0 rounded-full bg-zinc-800 dark:bg-zinc-100 overflow-hidden">
+                              <div className="absolute inset-0 bg-rose-900/80 dark:bg-rose-200/80 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out rounded-full" />
+                            </div>
+
+                            {/* Icon Text */}
+                            <span className="relative z-10 text-white dark:text-black font-black text-xl tracking-wider">
+                              ID
+                            </span>
+                          </motion.button>
+                        </motion.div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
               )}
 
-              {/* Progress Section - only appears after user clicks "Click to start" */}
-              {hasStarted && (
-                <motion.div
-                  className="mt-16 w-full max-w-xs mx-auto"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                >
-                  {/* Thin Progress Bar */}
-                  <div className="relative h-0.5 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
-                    <motion.div
-                      className="absolute top-0 left-0 h-full bg-black dark:bg-white"
-                      style={{
-                        width: `${progress}%`,
-                        transition: `width ${ANIMATION.PROGRESS_BAR_TRANSITION}s cubic-bezier(${EASING.SMOOTH_PROGRESS.join(', ')})`,
-                      }}
-                    />
-                  </div>
-
-                  {/* Progress Indicator */}
-                  <motion.div
-                    className="mt-6 text-center"
-                    animate={{
-                      opacity: progress < PROGRESS.SHOW_PERCENTAGE_THRESHOLD ? 1 : 0,
-                    }}
-                    transition={{ duration: ANIMATION.PROGRESS_OPACITY_TRANSITION }}
-                  >
-                    <p className="text-xs font-medium text-black/30 dark:text-white/30 tracking-widest uppercase">
-                      {Math.round(progress)} %
-                    </p>
-                  </motion.div>
-                </motion.div>
-              )}
             </div>
+
+            {/* Progress Section - absolutely positioned so it doesn't shift text above */}
+            {hasStarted && (
+              <motion.div
+                className="absolute left-1/2 -translate-x-1/2 w-full max-w-xs px-6"
+                style={{ top: '75%' }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+              >
+                {/* Thin Progress Bar */}
+                <div className="relative h-0.5 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
+                  <motion.div
+                    className="absolute top-0 left-0 h-full bg-black dark:bg-white"
+                    style={{
+                      width: `${progress}%`,
+                      transition: `width ${ANIMATION.PROGRESS_BAR_TRANSITION}s cubic-bezier(${EASING.SMOOTH_PROGRESS.join(', ')})`,
+                    }}
+                  />
+                </div>
+
+                {/* Progress Indicator */}
+                <motion.div
+                  className="mt-6 text-center"
+                  animate={{
+                    opacity: progress < PROGRESS.SHOW_PERCENTAGE_THRESHOLD ? 1 : 0,
+                  }}
+                  transition={{ duration: ANIMATION.PROGRESS_OPACITY_TRANSITION }}
+                >
+                  <p className="text-xs font-medium text-black/30 dark:text-white/30 tracking-widest uppercase">
+                    {Math.round(progress)} %
+                  </p>
+                </motion.div>
+              </motion.div>
+            )}
 
             {/* Bottom Indicator */}
             {hasStarted && (

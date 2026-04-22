@@ -1,23 +1,20 @@
-// Page Background Configuration
-// Light mode and Dark mode background URLs (GIF or video)
-// Leave empty string '' to use default background
 
 export const PAGE_BACKGROUNDS = {
   home: {
-    light: '', // Light mode background URL
-    dark: '', // Dark mode background URL
+    light: '',
+    dark: '', 
   },
   about: {
-    light: '', // Light mode background URL
-    dark: '', // Dark mode background URL
+    light: '',
+    dark: '', 
   },
   experience: {
     light: '',
-    dark: '/img/bg01.mp4',
+    dark: '',
   },
   skills: {
-    light: '', // Light mode background URL
-    dark: '', // Dark mode background URL
+    light: '', 
+    dark: '', 
   },
   contact: {
     light: '',
