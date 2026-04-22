@@ -398,10 +398,10 @@ const Home: React.FC = () => {
                       ease: 'easeInOut',
                     }}
                   >
-                    PROFESSIONAL FOCUS
+                    FOCUS
                   </motion.p>
                   <p className="text-sm sm:text-lg font-bold tracking-tight text-white">
-                    DATA & MEDIA
+                    DATA & LOGISTICS
                   </p>
                 </div>
               </motion.div>

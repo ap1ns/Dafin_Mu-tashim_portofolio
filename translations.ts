@@ -28,10 +28,10 @@ export const translations = {
     skillsLabel: 'SKILLS',
     educationLabel: 'EDUCATION',
     academicJourney: 'Academic Journey',
-    continuousLearning: 'Continuous Learning',
+    continuousLearning: 'Self-Development',
     cyberSecurity: 'Cyber Security',
     basedInBandung: 'BASED IN BANDUNG',
-    availableForRemote: 'Available for remote collaboration',
+    availableForRemote: 'Ready to work in shifts or under pressure',
 
     // Experience Page
     experienceTitle: 'WORK EXPERIENCE',
@@ -89,7 +89,7 @@ export const translations = {
     termsOfService: 'Terms of Service',
 
     // Experience details
-    dataAnalyst: 'Data Analyst',
+    dataAnalyst: 'Warehouse Administration & Data Entry',
     multipleFreelancePlatforms: 'Multiple Freelance Platforms',
     present: 'Present',
     dataAnalystDesc:
@@ -252,13 +252,13 @@ export const translations = {
     skillsLabel: 'KEAHLIAN',
     educationLabel: 'PENDIDIKAN',
     academicJourney: 'Perjalanan Akademik',
-    continuousLearning: 'Pembelajaran Berkelanjutan',
+    continuousLearning: 'PENGEMBANGAN DIRI',
     cyberSecurity: 'Data Analyst',
     basedInBandung: 'BERDOMISILI DI BANDUNG',
-    availableForRemote: 'Tersedia untuk kolaborasi jarak jauh',
+    availableForRemote: 'Siap bekerja dalam sistem shift maupun di bawah tekanan.',
 
 
-   // Experience Page
+    // Experience Page
     experienceTitle: 'PENGALAMAN KERJA',
     experienceSubtitle: 'Perjalanan Profesional',
     experienceDescription:
@@ -314,7 +314,7 @@ export const translations = {
     termsOfService: 'Ketentuan Layanan',
 
     // Experience details
-    dataAnalyst: 'Analis Data',
+    dataAnalyst: 'Administrasi Gudang & Data entry.',
     multipleFreelancePlatforms: 'Berbagai Platform Freelance',
     present: 'Saat Ini',
     dataAnalystDesc:
@@ -360,7 +360,7 @@ export const translations = {
     closingThoughts: "Catatan Penutup",
     quoteText: "\"Hidup itu sebenarnya sederhana, <span className=\"italic text-zinc-400 font-light\">gengsi dan pikiran kita sendirilah</span> yang membuatnya rumit.\"",
 
-   techStackV2: "Keahlian Teknologi v2.0",
+    techStackV2: "Keahlian Teknologi v2.0",
     coreCompetencies: "KOMPETENSI INTI",
     skillsCoreDesc: "Bagian ini menunjukkan kemahiran teknis saya dalam perangkat administrasi dan manajemen data. Berbekal latar belakang di bidang Teknik Komputer dan Jaringan, saya menerapkan pendekatan sistematis dalam mengelola informasi, mengatur inventaris, serta memastikan efisiensi operasional. Seluruh proyek ini mencerminkan komitmen saya terhadap akurasi, optimalisasi alur kerja, dan dokumentasi profesional.",
 
