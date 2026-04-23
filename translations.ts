@@ -89,7 +89,7 @@ export const translations = {
     termsOfService: 'Terms of Service',
 
     // Experience details
-    dataAnalyst: 'Warehouse Administration & Data Entry',
+    dataAnalyst: 'Data Analyst',
     multipleFreelancePlatforms: 'Multiple Freelance Platforms',
     present: 'Present',
     dataAnalystDesc:
@@ -322,7 +322,7 @@ export const translations = {
     termsOfService: 'Ketentuan Layanan',
 
     // Experience details
-    dataAnalyst: 'Administrasi Gudang & Data entry.',
+    dataAnalyst: 'Analis Data.',
     multipleFreelancePlatforms: 'Berbagai Platform Freelance',
     present: 'Saat Ini',
     dataAnalystDesc:

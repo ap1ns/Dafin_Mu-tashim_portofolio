@@ -270,54 +270,54 @@ const App: React.FC = () => {
         <LanguageProvider>
           <EasterEggProvider>
             <BrowserRouter>
-            <AudioProvider
-              audioRef={audioRef}
-              isSoundEnabled={soundEnabled}
-              openPlaylist={openPlaylist}
-            >
-              <div className="min-h-screen flex flex-col bg-black overflow-x-hidden selection:bg-white selection:text-black transition-colors duration-300 relative">
-                {/* Loading Screen */}
-                <LoadingScreen
-                  duration={5000}
-                  isLoading={isLoading}
-                  onComplete={handleLoadingComplete}
-                  onStart={() => {
-                    setHasStarted(true);
-                    setSoundEnabled(true);
-                    if (AUDIO_TRACKS.length > 0) {
-                      setCurrentTrackIndex(Math.floor(Math.random() * AUDIO_TRACKS.length));
-                    }
-                  }}
-                  onStartWithoutMusic={() => {
-                    setHasStarted(true);
-                    setSoundEnabled(false);
-                  }}
-                  hasStarted={hasStarted}
-                />
+              <AudioProvider
+                audioRef={audioRef}
+                isSoundEnabled={soundEnabled}
+                openPlaylist={openPlaylist}
+              >
+                <div className="min-h-screen flex flex-col bg-black overflow-x-hidden selection:bg-white selection:text-black transition-colors duration-300 relative">
+                  {/* Loading Screen */}
+                  <LoadingScreen
+                    duration={5000}
+                    isLoading={isLoading}
+                    onComplete={handleLoadingComplete}
+                    onStart={() => {
+                      setHasStarted(true);
+                      setSoundEnabled(true);
+                      if (AUDIO_TRACKS.length > 0) {
+                        setCurrentTrackIndex(Math.floor(Math.random() * AUDIO_TRACKS.length));
+                      }
+                    }}
+                    onStartWithoutMusic={() => {
+                      setHasStarted(true);
+                      setSoundEnabled(false);
+                    }}
+                    hasStarted={hasStarted}
+                  />
 
 
 
-                <AppContent loadingComplete={loadingComplete} openPlaylist={openPlaylist} />
+                  <AppContent loadingComplete={loadingComplete} openPlaylist={openPlaylist} />
 
-                {/* Easter Egg Component */}
-                <EasterEgg />
+                  {/* Easter Egg Component */}
+                  <EasterEgg />
 
-                <MusicPlayer
-                  tracks={AUDIO_TRACKS}
-                  currentTrackIndex={currentTrackIndex}
-                  soundEnabled={soundEnabled}
-                  isPlayerOpen={isPlayerOpen}
-                  isTrackListOpen={isTrackListOpen}
-                  setIsPlayerOpen={setIsPlayerOpen}
-                  setIsTrackListOpen={setIsTrackListOpen}
-                  setCurrentTrackIndex={setCurrentTrackIndex}
-                  setSoundEnabled={setSoundEnabled}
-                  audioRef={audioRef}
-                  playerBarRef={playerBarRef}
-                  trackListRef={trackListRef}
-                />
-              </div>
-            </AudioProvider>
+                  <MusicPlayer
+                    tracks={AUDIO_TRACKS}
+                    currentTrackIndex={currentTrackIndex}
+                    soundEnabled={soundEnabled}
+                    isPlayerOpen={isPlayerOpen}
+                    isTrackListOpen={isTrackListOpen}
+                    setIsPlayerOpen={setIsPlayerOpen}
+                    setIsTrackListOpen={setIsTrackListOpen}
+                    setCurrentTrackIndex={setCurrentTrackIndex}
+                    setSoundEnabled={setSoundEnabled}
+                    audioRef={audioRef}
+                    playerBarRef={playerBarRef}
+                    trackListRef={trackListRef}
+                  />
+                </div>
+              </AudioProvider>
             </BrowserRouter>
           </EasterEggProvider>
         </LanguageProvider>
