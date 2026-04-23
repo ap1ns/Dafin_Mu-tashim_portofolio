@@ -38,7 +38,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
   duration = DEFAULT_LOADING_DURATION,
   onComplete,
   isLoading = true,
-  backgroundUrl = 'https://i.pinimg.com/originals/48/67/79/48677982e0a309142bf2ebe21edb4486.gif',
+  backgroundUrl = 'https://i.pinimg.com/originals/84/f3/35/84f335961cb42e259a4acf945f57879a.gif',
   onStart,
   onStartWithoutMusic,
   hasStarted = false,
