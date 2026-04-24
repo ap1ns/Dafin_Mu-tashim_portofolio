@@ -112,7 +112,7 @@ export const translations = {
     computerNetworking: 'Teknik Komputer dan Jaringan',
     computerNetworkingDesc:
       'Studying computer networking, hardware, basic programming, and IT infrastructure fundamentals.',
-    logisticsEnthusiast: "LOGISTICS & OPERATIONS ENTHUSIAST",
+    logisticsEnthusiast: "DATA & OPERATIONS ENTHUSIAST",
     homeDescription2: "Supporting seamless distribution through precise data administration and efficient warehouse operations",
     downloadCV: "DOWNLOAD CV",
     aboutTitle2: "DRIVING EFFICIENCY IN LOGISTICS & OPERATIONS",
@@ -345,7 +345,7 @@ export const translations = {
     computerNetworking: 'Teknik Komputer dan Jaringan',
     computerNetworkingDesc:
       'Mempelajari jaringan komputer, perangkat keras, dasar-dasar pemrograman, serta infrastruktur TI.',
-    logisticsEnthusiast: "ANTUSIAS LOGISTIK & OPERASIONAL",
+    logisticsEnthusiast: "DATA & OPERATIONS ENTHUSIAST",
     homeDescription2: "Mendukung kelancaran distribusi melalui administrasi data yang presisi dan operasional gudang yang efisien.",
     downloadCV: "UNDUH CV",
     aboutTitle2: "MENDORONG EFISIENSI LOGISTIK & OPERASIONAL",
