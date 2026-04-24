@@ -293,7 +293,7 @@ const Contact: React.FC = () => {
               <motion.div
                 variants={itemVariants}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
-                className="group relative flex flex-col sm:flex-row items-start sm:items-center gap-5 md:gap-6 p-6 md:p-8 rounded-[2rem] bg-zinc-50/80 dark:bg-white/[0.02] border border-zinc-200/80 dark:border-white/[0.05] hover:border-zinc-300 dark:hover:border-white/[0.1] transition-all duration-500 overflow-hidden backdrop-blur-md shadow-sm hover:shadow-md"
+                className="group relative flex items-center gap-5 md:gap-6 p-6 md:p-8 rounded-[2rem] bg-zinc-50/80 dark:bg-white/[0.02] border border-zinc-200/80 dark:border-white/[0.05] hover:border-zinc-300 dark:hover:border-white/[0.1] transition-all duration-500 overflow-hidden backdrop-blur-md shadow-sm hover:shadow-md"
                 whileHover={{ y: -4, scale: 1.02 }}
               >
                 {/* Background glow effect on hover */}
@@ -307,12 +307,12 @@ const Contact: React.FC = () => {
                   <MessageSquare size={24} strokeWidth={1.5} />
                 </motion.div>
 
-                <div className="relative z-10 flex-1 w-full flex flex-col justify-center">
-                  <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 mb-3">
+                <div className="relative z-10 flex-1 min-w-0 flex flex-col justify-center">
+                  <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 mb-2.5">
                     {t('directMessages')}
                   </p>
                   <motion.div
-                    className="flex flex-wrap gap-3"
+                    className="flex flex-wrap gap-2.5"
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"
